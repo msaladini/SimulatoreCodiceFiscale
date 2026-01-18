@@ -91,14 +91,43 @@ export default function Form({ onCalcolo, recentCalculations }) {
     const comuni = getLocations(false);
     const comuneCasuale = comuni[Math.floor(Math.random() * comuni.length)];
 
-    setFormData({
+    const nuoviDati = {
       cognome: cognomeCasuale,
       nome: nomeCasuale,
       sesso: sessoCasuale,
       dataNascita: data,
       estero: false,
       codicePaese: comuneCasuale.value
-    });
+    };
+
+    setFormData(nuoviDati);
+    setErrore('');
+
+    // Calcola il codice fiscale con i dati casuali generati
+    try {
+      const dataNascita = new Date(data);
+      const cf = calcolaCodiceFiscale({
+        cognome: cognomeCasuale,
+        nome: nomeCasuale,
+        dataNascita: dataNascita,
+        sesso: sessoCasuale,
+        codicePaese: comuneCasuale.value
+      });
+
+      setRisultato(cf);
+      
+      // Aggiorna lo storico
+      onCalcolo({
+        codiceFiscale: cf,
+        cognome: cognomeCasuale,
+        nome: nomeCasuale,
+        dataNascita: data,
+        luogoNascita: comuneCasuale.label,
+        sesso: sessoCasuale
+      });
+    } catch (err) {
+      setErrore(err.message);
+    }
   };
 
   return (
