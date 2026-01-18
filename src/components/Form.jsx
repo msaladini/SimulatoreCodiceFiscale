@@ -160,7 +160,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
   return (
     <div className="form-container">
-      <h2>Calcolo</h2>
+      <h2>Dati per il calcolo</h2>
 
       <div className="form-group">
         <label htmlFor="cognome">Cognome</label>

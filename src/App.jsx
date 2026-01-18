@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="app-wrapper">
       <header className="app-header">
-        <h1>Calcolo Codice Fiscale</h1>
+        <h1>Simulatore Calcolo Codice Fiscale</h1>
       </header>
 
       <main className="app-main">
