@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './History.css';
 
-export default function History({ calculations }) {
+export default function History({ calculations, onEdit }) {
   const [history, setHistory] = useState([]);
   const [showCopyNotification, setShowCopyNotification] = useState(false);
 
@@ -68,6 +68,16 @@ export default function History({ calculations }) {
     setTimeout(() => setShowCopyNotification(false), 2000);
   };
 
+  const handleEdit = (item) => {
+    onEdit({
+      cognome: item.cognome,
+      nome: item.nome,
+      sesso: item.sesso,
+      dataNascita: item.dataNascita,
+      codicePaese: item.codicePaese
+    });
+  };
+
   return (
     <div className="history-container">
       <div className="history-header">
@@ -108,6 +118,13 @@ export default function History({ calculations }) {
                   <td>{item.luogoNascita}</td>
                   <td className="age-cell">{calculateAge(item.dataNascita)}</td>
                   <td className="actions-cell">
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEdit(item)}
+                      title="Modifica"
+                    >
+                      ✎
+                    </button>
                     <button
                       className="btn-copy"
                       onClick={() => handleCopyToClipboard(item.codiceFiscale)}

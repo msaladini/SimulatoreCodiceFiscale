@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { calcolaCodiceFiscale } from '../utils/codiceFiscaleCalculator';
 import { getLocations } from '../data/locations';
 import './Form.css';
 
-export default function Form({ onCalcolo, recentCalculations }) {
+export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [formData, setFormData] = useState({
     cognome: '',
     nome: '',
@@ -18,6 +18,21 @@ export default function Form({ onCalcolo, recentCalculations }) {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
 
   const locations = getLocations(formData.estero);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        cognome: initialData.cognome,
+        nome: initialData.nome,
+        sesso: initialData.sesso,
+        dataNascita: initialData.dataNascita,
+        estero: false,
+        codicePaese: initialData.codicePaese || ''
+      });
+      setRisultato('');
+      setErrore('');
+    }
+  }, [initialData]);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -75,7 +90,8 @@ export default function Form({ onCalcolo, recentCalculations }) {
         nome: formData.nome,
         dataNascita: formData.dataNascita,
         luogoNascita: luogoNascita,
-        sesso: formData.sesso
+        sesso: formData.sesso,
+        codicePaese: formData.codicePaese
       });
     } catch (err) {
       setErrore(err.message);
@@ -134,7 +150,8 @@ export default function Form({ onCalcolo, recentCalculations }) {
         nome: nomeCasuale,
         dataNascita: data,
         luogoNascita: comuneCasuale.label,
-        sesso: sessoCasuale
+        sesso: sessoCasuale,
+        codicePaese: comuneCasuale.value
       });
     } catch (err) {
       setErrore(err.message);

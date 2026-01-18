@@ -5,9 +5,14 @@ import History from './components/History'
 
 function App() {
   const [lastCalculation, setLastCalculation] = useState(null)
+  const [formDataToEdit, setFormDataToEdit] = useState(null)
 
   const handleCalcolo = (calcolo) => {
     setLastCalculation(calcolo)
+  }
+
+  const handleEditFromHistory = (item) => {
+    setFormDataToEdit(item)
   }
 
   return (
@@ -19,11 +24,11 @@ function App() {
       <main className="app-main">
         <div className="content-container">
           <div className="left-panel">
-            <Form onCalcolo={handleCalcolo} />
+            <Form onCalcolo={handleCalcolo} initialData={formDataToEdit} />
           </div>
 
           <div className="right-panel">
-            <History calculations={lastCalculation} />
+            <History calculations={lastCalculation} onEdit={handleEditFromHistory} />
           </div>
         </div>
       </main>
