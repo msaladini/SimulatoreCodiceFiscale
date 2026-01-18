@@ -15,8 +15,15 @@ export default function Form({ onCalcolo, recentCalculations }) {
 
   const [risultato, setRisultato] = useState('');
   const [errore, setErrore] = useState('');
+  const [showCopyNotification, setShowCopyNotification] = useState(false);
 
   const locations = getLocations(formData.estero);
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setShowCopyNotification(true);
+    setTimeout(() => setShowCopyNotification(false), 2000);
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -58,7 +65,7 @@ export default function Form({ onCalcolo, recentCalculations }) {
 
       setRisultato(cf);
       // Copia il codice fiscale nella clipboard
-      navigator.clipboard.writeText(cf);
+      copyToClipboard(cf);
       
       // Aggiorna lo storico
       const luogoNascita = locations.find(l => l.value === formData.codicePaese)?.label || formData.codicePaese;
@@ -118,7 +125,7 @@ export default function Form({ onCalcolo, recentCalculations }) {
 
       setRisultato(cf);
       // Copia il codice fiscale nella clipboard
-      navigator.clipboard.writeText(cf);
+      copyToClipboard(cf);
       
       // Aggiorna lo storico
       onCalcolo({
@@ -236,6 +243,12 @@ export default function Form({ onCalcolo, recentCalculations }) {
       {risultato && (
         <div className="result-box">
           <span className="result-code">{risultato}</span>
+        </div>
+      )}
+
+      {showCopyNotification && (
+        <div className="copy-notification">
+          ✓ Codice copiato negli appunti!
         </div>
       )}
     </div>
