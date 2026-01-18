@@ -146,13 +146,19 @@
 }
 
 .result-code {
-  display: block;
-  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  font-size: 2rem;
   font-weight: 700;
   color: white;
-  letter-spacing: 2px;
   font-family: 'Courier New', monospace;
-  word-spacing: 0.5rem;
+}
+
+.code-part {
+  display: inline-block;
+  letter-spacing: 1px;
 }
 
 .copy-notification {

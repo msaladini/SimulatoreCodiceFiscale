@@ -266,7 +266,15 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
       {risultato && (
         <div className="result-box">
-          <span className="result-code">{risultato}</span>
+          <div className="result-code">
+            <span className="code-part">{risultato.substring(0, 3)}</span>
+            <span className="code-part">{risultato.substring(3, 6)}</span>
+            <span className="code-part">{risultato.substring(6, 8)}</span>
+            <span className="code-part">{risultato.substring(8, 9)}</span>
+            <span className="code-part">{risultato.substring(9, 11)}</span>
+            <span className="code-part">{risultato.substring(11, 15)}</span>
+            <span className="code-part">{risultato.substring(15, 16)}</span>
+          </div>
         </div>
       )}
 
