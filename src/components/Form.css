@@ -103,14 +103,27 @@
 }
 
 .btn-secondary {
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ddd;
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 2px solid #fcd34d;
 }
 
 .btn-secondary:hover {
-  background-color: #e8e8e8;
-  border-color: #ccc;
+  background-color: #fde68a;
+  border-color: #fbbf24;
+}
+
+.btn-secondary:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-secondary:disabled:hover {
+  background-color: #d1d5db;
+  border-color: #9ca3af;
 }
 
 .error-message {

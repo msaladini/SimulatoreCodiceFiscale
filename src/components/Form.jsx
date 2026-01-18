@@ -42,6 +42,15 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     setTimeout(() => setShowCopyNotification(false), 2000);
   };
 
+  const isFormValid = () => {
+    return (
+      formData.cognome.trim() !== '' &&
+      formData.nome.trim() !== '' &&
+      formData.dataNascita !== '' &&
+      formData.codicePaese !== ''
+    );
+  };
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -241,10 +250,10 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       </div>
 
       <div className="button-group">
-        <button className="btn btn-primary" onClick={handleCalcola}>
+        <button className="btn btn-secondary" onClick={handleCalcola} disabled={!isFormValid()}>
           CALCOLA CODICE FISCALE
         </button>
-        <button className="btn btn-secondary" onClick={handleCodiceCasuale}>
+        <button className="btn btn-primary" onClick={handleCodiceCasuale}>
           CODICE CASUALE
         </button>
       </div>
