@@ -3,6 +3,7 @@ import './History.css';
 
 export default function History({ calculations }) {
   const [history, setHistory] = useState([]);
+  const [showCopyNotification, setShowCopyNotification] = useState(false);
 
   useEffect(() => {
     // Carica lo storico da localStorage
@@ -61,6 +62,12 @@ export default function History({ calculations }) {
     return age;
   };
 
+  const handleCopyToClipboard = (codiceFiscale) => {
+    navigator.clipboard.writeText(codiceFiscale);
+    setShowCopyNotification(true);
+    setTimeout(() => setShowCopyNotification(false), 2000);
+  };
+
   return (
     <div className="history-container">
       <div className="history-header">
@@ -102,6 +109,13 @@ export default function History({ calculations }) {
                   <td className="age-cell">{calculateAge(item.dataNascita)}</td>
                   <td className="actions-cell">
                     <button
+                      className="btn-copy"
+                      onClick={() => handleCopyToClipboard(item.codiceFiscale)}
+                      title="Copia codice fiscale"
+                    >
+                      📋
+                    </button>
+                    <button
                       className="btn-delete"
                       onClick={() => handleDelete(item.id)}
                       title="Elimina"
@@ -113,6 +127,12 @@ export default function History({ calculations }) {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {showCopyNotification && (
+        <div className="copy-notification">
+          ✓ Codice copiato negli appunti!
         </div>
       )}
     </div>
