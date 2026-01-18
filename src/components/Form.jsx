@@ -57,6 +57,8 @@ export default function Form({ onCalcolo, recentCalculations }) {
       });
 
       setRisultato(cf);
+      // Copia il codice fiscale nella clipboard
+      navigator.clipboard.writeText(cf);
       
       // Aggiorna lo storico
       const luogoNascita = locations.find(l => l.value === formData.codicePaese)?.label || formData.codicePaese;
@@ -115,6 +117,8 @@ export default function Form({ onCalcolo, recentCalculations }) {
       });
 
       setRisultato(cf);
+      // Copia il codice fiscale nella clipboard
+      navigator.clipboard.writeText(cf);
       
       // Aggiorna lo storico
       onCalcolo({
