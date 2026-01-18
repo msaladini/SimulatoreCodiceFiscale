@@ -1,86 +1,17 @@
 /**
  * Lista dei comuni italiani e stati esteri con i loro codici
- * Formato: { label: "Nome Comune (Sigla)", value: "XNNN" }
+ * I comuni sono importati dal file comuni.js con il formato completo
  */
 
-export const comuni = [
-  // Comuni italiani più comuni
-  { label: "Roma (RM)", value: "H501" },
-  { label: "Milano (MI)", value: "F205" },
-  { label: "Napoli (NA)", value: "F839" },
-  { label: "Torino (TO)", value: "H001" },
-  { label: "Palermo (PA)", value: "G273" },
-  { label: "Genova (GE)", value: "D612" },
-  { label: "Bologna (BO)", value: "A944" },
-  { label: "Firenze (FI)", value: "D612" },
-  { label: "Bari (BA)", value: "A662" },
-  { label: "Catania (CT)", value: "C351" },
-  { label: "Venezia (VE)", value: "L736" },
-  { label: "Verona (VR)", value: "L781" },
-  { label: "Messina (ME)", value: "E226" },
-  { label: "Padova (PD)", value: "G407" },
-  { label: "Trieste (TS)", value: "L424" },
-  { label: "Brescia (BS)", value: "B157" },
-  { label: "Parma (PR)", value: "G337" },
-  { label: "Pisa (PI)", value: "G702" },
-  { label: "Modena (MO)", value: "F839" },
-  { label: "Reggio Calabria (RC)", value: "H702" },
-  { label: "Salerno (SA)", value: "I652" },
-  { label: "Perugia (PG)", value: "G479" },
-  { label: "Ravenna (RA)", value: "H156" },
-  { label: "Lecce (LE)", value: "E506" },
-  { label: "Alessandria (AL)", value: "A220" },
-  { label: "Ancona (AN)", value: "A429" },
-  { label: "Benevento (BN)", value: "A191" },
-  { label: "Bergamo (BG)", value: "A794" },
-  { label: "Biella (BI)", value: "A859" },
-  { label: "Campobasso (CB)", value: "B551" },
-  { label: "Caserta (CE)", value: "B812" },
-  { label: "Como (CO)", value: "D038" },
-  { label: "Cosenza (CS)", value: "D086" },
-  { label: "Cremona (CR)", value: "D129" },
-  { label: "Crotone (KR)", value: "D604" },
-  { label: "Cuneo (CN)", value: "D197" },
-  { label: "Frosinone (FR)", value: "D582" },
-  { label: "Frosinone (FR)", value: "D582" },
-  { label: "Gorizia (GO)", value: "D772" },
-  { label: "Grosseto (GR)", value: "D835" },
-  { label: "Isernia (IS)", value: "E815" },
-  { label: "La Spezia (SP)", value: "E509" },
-  { label: "Latina (LT)", value: "E538" },
-  { label: "Livorno (LI)", value: "E506" },
-  { label: "Lodi (LO)", value: "E715" },
-  { label: "Lucca (LU)", value: "E896" },
-  { label: "Macerata (MC)", value: "F158" },
-  { label: "Mantova (MN)", value: "F175" },
-  { label: "Matera (MT)", value: "F286" },
-  { label: "Monza (MB)", value: "F205" },
-  { label: "Novara (NO)", value: "F591" },
-  { label: "Nuoro (NU)", value: "F839" },
-  { label: "Oristano (OR)", value: "G133" },
-  { label: "Pesaro Urbino (PU)", value: "G546" },
-  { label: "Pescara (PE)", value: "G653" },
-  { label: "Piacenza (PC)", value: "G702" },
-  { label: "Prato (PO)", value: "G945" },
-  { label: "Ragusa (RG)", value: "H198" },
-  { label: "Rieti (RI)", value: "H299" },
-  { label: "Rimini (RN)", value: "H370" },
-  { label: "Rovigo (RO)", value: "H489" },
-  { label: "Sassari (SS)", value: "I744" },
-  { label: "Savona (SV)", value: "I652" },
-  { label: "Siena (SI)", value: "I765" },
-  { label: "Siracusa (SR)", value: "I893" },
-  { label: "Sondrio (SO)", value: "I844" },
-  { label: "Sud Sardegna (SU)", value: "I962" },
-  { label: "Terni (TR)", value: "L035" },
-  { label: "Trapani (TP)", value: "L378" },
-  { label: "Udine (UD)", value: "L645" },
-  { label: "Varese (VA)", value: "L670" },
-  { label: "Vercelli (VC)", value: "L759" },
-  { label: "Vicenza (VI)", value: "L840" },
-  { label: "Viterbo (VT)", value: "L909" },
-  { label: "Montepulciano (SI)", value: "F592" },
-];
+import { elencoComuni } from './comuni.js';
+
+// Trasforma i dati da comuni.js nel formato richiesto
+const comuni = elencoComuni.map(([codice, sigla, nome]) => ({
+  label: `${nome} (${sigla})`,
+  value: codice
+}));
+
+export { comuni };
 
 export const stati = [
   { label: "Afghanistan", value: "Z100" },
