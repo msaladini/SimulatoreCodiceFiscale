@@ -1,25 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './History.css';
 
 export default function History({ calculations, onEdit }) {
   const [history, setHistory] = useState([]);
   const [showCopyNotification, setShowCopyNotification] = useState(false);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Carica lo storico da localStorage
-    const savedHistory = localStorage.getItem('codiciFiscaliHistory');
-    if (savedHistory) {
-      try {
-        setHistory(JSON.parse(savedHistory));
-      } catch (err) {
-        console.error('Errore caricamento storico:', err);
+    // Al primo render: carica da localStorage
+    // Nei render successivi: salva nel localStorage
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      const savedHistory = localStorage.getItem('codiciFiscaliHistory');
+      if (savedHistory) {
+        try {
+          setHistory(JSON.parse(savedHistory));
+        } catch (err) {
+          console.error('Errore caricamento storico:', err);
+        }
       }
+    } else {
+      // Salva lo storico nel localStorage quando cambia (dopo il primo render)
+      localStorage.setItem('codiciFiscaliHistory', JSON.stringify(history));
     }
-  }, []);
-
-  useEffect(() => {
-    // Salva lo storico nel localStorage quando cambia
-    localStorage.setItem('codiciFiscaliHistory', JSON.stringify(history));
   }, [history]);
 
   useEffect(() => {
