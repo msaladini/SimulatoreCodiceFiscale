@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { calcolaCodiceFiscale } from '../utils/codiceFiscaleCalculator';
 import { getLocations } from '../data/locations';
+import { elencoNomiMaschili, elencoNomiFemminili } from '../data/nomi';
+import { elencoCognomi } from '../data/cognomi';
 import './Form.css';
 
 export default function Form({ onCalcolo, recentCalculations, initialData }) {
@@ -100,13 +102,9 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
   const handleCodiceCasuale = () => {
     // Genera dati casuali per test
-    const cognomi = ['Rossi', 'Bianchi', 'Verdi', 'Ferrari', 'Russo', 'Colombo', 'Gallo', 'Conti', 'De Luca', 'Mancini'];
-    const nomi = ['Mario', 'Marco', 'Andrea', 'Luca', 'Giovanni', 'Paolo', 'Alessandro', 'Antonio', 'Francesco', 'Matteo'];
-    const nomin = ['Maria', 'Anna', 'Rosa', 'Lucia', 'Francesca', 'Giulia', 'Alessia', 'Martina', 'Elena', 'Valentina'];
-
-    const cognomeCasuale = cognomi[Math.floor(Math.random() * cognomi.length)];
+    const cognomeCasuale = elencoCognomi[Math.floor(Math.random() * elencoCognomi.length)];
     const sessoCasuale = Math.random() > 0.5 ? 'M' : 'F';
-    const nomeCasuale = sessoCasuale === 'M' ? nomi[Math.floor(Math.random() * nomi.length)] : nomin[Math.floor(Math.random() * nomin.length)];
+    const nomeCasuale = sessoCasuale === 'M' ? elencoNomiMaschili[Math.floor(Math.random() * elencoNomiMaschili.length)] : elencoNomiFemminili[Math.floor(Math.random() * elencoNomiFemminili.length)];
     
     const year = Math.floor(Math.random() * 60) + 1960;
     const month = Math.floor(Math.random() * 12) + 1;
