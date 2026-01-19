@@ -59,9 +59,15 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    let newValue = type === 'checkbox' ? checked : value;
+
+    if (name === 'nome' || name === 'cognome') {
+      newValue = newValue.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: newValue
     }));
     if (name === 'estero') {
       setFormData(prev => ({ ...prev, codicePaese: '' }));
@@ -98,7 +104,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       setRisultato(cf);
       // Copia il codice fiscale nella clipboard
       copyToClipboard(cf);
-      
+
       // Aggiorna lo storico
       const luogoNascita = locations.find(l => l.value === formData.codicePaese)?.label || formData.codicePaese;
       onCalcolo({
@@ -120,7 +126,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     const cognomeCasuale = elencoCognomi[Math.floor(Math.random() * elencoCognomi.length)];
     const sessoCasuale = Math.random() > 0.5 ? 'M' : 'F';
     const nomeCasuale = sessoCasuale === 'M' ? elencoNomiMaschili[Math.floor(Math.random() * elencoNomiMaschili.length)] : elencoNomiFemminili[Math.floor(Math.random() * elencoNomiFemminili.length)];
-    
+
     const year = Math.floor(Math.random() * 60) + 1960;
     const month = Math.floor(Math.random() * 12) + 1;
     const day = Math.floor(Math.random() * 28) + 1;
@@ -155,7 +161,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       setRisultato(cf);
       // Copia il codice fiscale nella clipboard
       copyToClipboard(cf);
-      
+
       // Aggiorna lo storico
       onCalcolo({
         codiceFiscale: cf,
