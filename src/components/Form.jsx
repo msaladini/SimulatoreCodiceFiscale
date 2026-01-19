@@ -18,6 +18,8 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [risultato, setRisultato] = useState('');
   const [errore, setErrore] = useState('');
   const [showCopyNotification, setShowCopyNotification] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [showLocationList, setShowLocationList] = useState(false);
 
   const locations = getLocations(formData.estero);
 
@@ -50,6 +52,10 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       formData.codicePaese !== ''
     );
   };
+
+  const filteredLocations = locations.filter(loc =>
+    loc.label.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -231,22 +237,43 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="codicePaese">
+        <label htmlFor="searchLocation">
           {formData.estero ? 'Stato di nascita' : 'Comune di nascita'}
         </label>
-        <select
-          id="codicePaese"
-          name="codicePaese"
-          value={formData.codicePaese}
-          onChange={handleInputChange}
-        >
-          <option value="">-- Seleziona --</option>
-          {locations.map(loc => (
-            <option key={loc.value} value={loc.value}>
-              {loc.label}
-            </option>
-          ))}
-        </select>
+        <input
+          type="text"
+          id="searchLocation"
+          placeholder="Cerca comune o stato..."
+          value={searchText || (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setShowLocationList(true);
+          }}
+          onFocus={() => setShowLocationList(true)}
+          onBlur={() => setTimeout(() => setShowLocationList(false), 200)}
+          className="search-input"
+        />
+        {showLocationList && searchText && (
+          <div className="location-list">
+            {filteredLocations.length > 0 ? (
+              filteredLocations.slice(0, 50).map(loc => (
+                <div
+                  key={loc.value}
+                  className="location-item"
+                  onClick={() => {
+                    setFormData(prev => ({ ...prev, codicePaese: loc.value }));
+                    setSearchText('');
+                    setShowLocationList(false);
+                  }}
+                >
+                  {loc.label}
+                </div>
+              ))
+            ) : (
+              <div className="location-item no-results">Nessun risultato trovato</div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="button-group">
