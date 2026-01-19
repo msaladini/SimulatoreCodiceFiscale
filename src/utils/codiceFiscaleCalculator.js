@@ -8,19 +8,8 @@ function extractThreeChars(str) {
   const consonants = str.replace(/[AEIOU]/g, '');
   const vowels = str.replace(/[^AEIOU]/g, '');
 
-  if (consonants.length >= 3) {
-    return consonants.substring(0, 3);
-  } else if (consonants.length === 2) {
-    return consonants + vowels.substring(0, 1);
-  } else if (consonants.length === 1) {
-    return consonants + vowels.substring(0, 2);
-  } else if (vowels.length >= 2) {
-    return vowels.substring(0, 2) + 'X';
-  } else if (vowels.length === 1) {
-    return vowels + 'XX';
-  } else {
-    return 'XXX';
-  }
+  const combined = (consonants + vowels).substring(0, 3);
+  return combined.padEnd(3, 'X');
 }
 
 /**
@@ -44,20 +33,11 @@ function getNomeCode(nome) {
 
   if (consonants.length >= 4) {
     // Se 4+ consonanti: 1°, 3°, 4°
-    return consonants.substring(0, 1) + consonants.substring(2, 4);
-  } else if (consonants.length === 3) {
-    return consonants.substring(0, 3);
-  } else if (consonants.length === 2) {
-    return consonants + vowels.substring(0, 1);
-  } else if (consonants.length === 1) {
-    return consonants + vowels.substring(0, 2);
-  } else if (vowels.length >= 2) {
-    return vowels.substring(0, 2) + 'X';
-  } else if (vowels.length === 1) {
-    return vowels + 'XX';
-  } else {
-    return 'XXX';
+    return (consonants.substring(0, 1) + consonants.substring(2, 4));
   }
+
+  const combined = (consonants + vowels).substring(0, 3);
+  return combined.padEnd(3, 'X');
 }
 
 /**
@@ -206,8 +186,8 @@ export function validaCodiceFiscale(codiceFiscale) {
     return false;
   }
 
-  const first15 = codiceFiscale.substring(0, 15);
-  const checkChar = codiceFiscale.substring(15, 16);
+  const first15 = codiceFiscale.substring(0, 15).toUpperCase();
+  const checkChar = codiceFiscale.substring(15, 16).toUpperCase();
   const calculatedCheck = getCheckChar(first15);
 
   return checkChar === calculatedCheck;
