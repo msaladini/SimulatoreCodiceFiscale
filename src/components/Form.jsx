@@ -18,7 +18,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [risultato, setRisultato] = useState('');
   const [errore, setErrore] = useState('');
   const [showCopyNotification, setShowCopyNotification] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(null);
   const [showLocationList, setShowLocationList] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,14 +31,16 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
   useEffect(() => {
     if (initialData) {
+      const isEstero = initialData.codicePaese?.startsWith('Z') || false;
       setFormData({
         cognome: initialData.cognome,
         nome: initialData.nome,
         sesso: initialData.sesso,
         dataNascita: initialData.dataNascita,
-        estero: false,
+        estero: isEstero,
         codicePaese: initialData.codicePaese || ''
       });
+      setSearchText(null);
       setRisultato('');
       setErrore('');
       setIsDirty(false);
@@ -78,6 +80,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     }));
     if (name === 'estero') {
       setFormData(prev => ({ ...prev, codicePaese: '' }));
+      setSearchText(null);
     }
     setIsDirty(true);
   };
@@ -154,6 +157,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     };
 
     setFormData(nuoviDati);
+    setSearchText(null);
     setErrore('');
 
     // Calcola il codice fiscale con i dati casuali generati
