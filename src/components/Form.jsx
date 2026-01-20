@@ -24,6 +24,10 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
   const locations = getLocations(formData.estero);
 
+  const handleFocus = (e) => {
+    e.target.select();
+  };
+
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -56,7 +60,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   };
 
   const filteredLocations = locations.filter(loc =>
-    loc.label.toLowerCase().includes(searchText.toLowerCase())
+    searchText && loc.label.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const handleInputChange = (e) => {
@@ -194,6 +198,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
           name="cognome"
           value={formData.cognome}
           onChange={handleInputChange}
+          onFocus={handleFocus}
           placeholder="Inserisci cognome"
         />
       </div>
@@ -206,6 +211,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
           name="nome"
           value={formData.nome}
           onChange={handleInputChange}
+          onFocus={handleFocus}
           placeholder="Inserisci nome"
         />
       </div>
@@ -255,14 +261,24 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
           type="text"
           id="searchLocation"
           placeholder="Cerca comune o stato..."
-          value={searchText || (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
+          value={searchText !== null ? searchText : (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
           onChange={(e) => {
             const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
             setSearchText(formattedValue);
             setShowLocationList(true);
           }}
-          onFocus={() => setShowLocationList(true)}
-          onBlur={() => setTimeout(() => setShowLocationList(false), 200)}
+          onFocus={(e) => {
+            const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
+            setSearchText(currentLabel);
+            setShowLocationList(true);
+            handleFocus(e);
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setShowLocationList(false);
+              setSearchText(null);
+            }, 200);
+          }}
           className="search-input"
         />
         {showLocationList && searchText && (
@@ -274,7 +290,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
                   className="location-item"
                   onClick={() => {
                     setFormData(prev => ({ ...prev, codicePaese: loc.value }));
-                    setSearchText('');
+                    setSearchText(null);
                     setShowLocationList(false);
                     setIsDirty(true);
                   }}
