@@ -20,6 +20,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [showLocationList, setShowLocationList] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
 
   const locations = getLocations(formData.estero);
 
@@ -35,6 +36,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       });
       setRisultato('');
       setErrore('');
+      setIsDirty(false);
     }
   }, [initialData]);
 
@@ -72,6 +74,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     if (name === 'estero') {
       setFormData(prev => ({ ...prev, codicePaese: '' }));
     }
+    setIsDirty(true);
   };
 
   const handleCalcola = () => {
@@ -116,6 +119,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         sesso: formData.sesso,
         codicePaese: formData.codicePaese
       });
+      setIsDirty(false);
     } catch (err) {
       setErrore(err.message);
     }
@@ -172,6 +176,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         sesso: sessoCasuale,
         codicePaese: comuneCasuale.value
       });
+      setIsDirty(false);
     } catch (err) {
       setErrore(err.message);
     }
@@ -270,6 +275,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
                     setFormData(prev => ({ ...prev, codicePaese: loc.value }));
                     setSearchText('');
                     setShowLocationList(false);
+                    setIsDirty(true);
                   }}
                 >
                   {loc.label}
@@ -283,7 +289,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       </div>
 
       <div className="button-group">
-        <button className="btn btn-secondary" onClick={handleCalcola} disabled={!isFormValid()}>
+        <button className="btn btn-secondary" onClick={handleCalcola} disabled={!isFormValid() || !isDirty}>
           CALCOLA CODICE FISCALE
         </button>
         <button className="btn btn-primary" onClick={handleCodiceCasuale}>
