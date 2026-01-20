@@ -106,8 +106,11 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.location-item:hover {
-  background-color: #f9fafb;
+.location-item:hover,
+.location-item.active {
+  background-color: #f3f4f6;
+  border-left: 4px solid #4f46e5;
+  padding-left: calc(0.75rem - 4px);
 }
 
 .location-item.no-results {
@@ -235,6 +238,7 @@
     opacity: 0;
     transform: translateX(-50%) translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);

@@ -21,6 +21,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [searchText, setSearchText] = useState('');
   const [showLocationList, setShowLocationList] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const locations = getLocations(formData.estero);
 
@@ -59,9 +60,9 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     );
   };
 
-  const filteredLocations = locations.filter(loc =>
+  const filteredLocations = (locations.filter(loc =>
     searchText && loc.label.toLowerCase().includes(searchText.toLowerCase())
-  );
+  )).slice(0, 50);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -266,15 +267,43 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
             const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
             setSearchText(formattedValue);
             setShowLocationList(true);
+            setActiveIndex(0);
+          }}
+          onKeyDown={(e) => {
+            if (!showLocationList || filteredLocations.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              setActiveIndex(prev => (prev < filteredLocations.length - 1 ? prev + 1 : prev));
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              setActiveIndex(prev => (prev > 0 ? prev - 1 : prev));
+            } else if (e.key === 'Enter' && activeIndex >= 0) {
+              e.preventDefault();
+              const selected = filteredLocations[activeIndex];
+              if (selected) {
+                setFormData(prev => ({ ...prev, codicePaese: selected.value }));
+                setSearchText(null);
+                setShowLocationList(false);
+                setIsDirty(true);
+              }
+            } else if (e.key === 'Escape') {
+              setShowLocationList(false);
+              setSearchText(null);
+            }
           }}
           onFocus={(e) => {
             const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
             setSearchText(currentLabel);
             setShowLocationList(true);
+            setActiveIndex(0);
             handleFocus(e);
           }}
           onBlur={() => {
             setTimeout(() => {
+              if (searchText === '') {
+                setFormData(prev => ({ ...prev, codicePaese: '' }));
+              }
               setShowLocationList(false);
               setSearchText(null);
             }, 200);
@@ -284,10 +313,10 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         {showLocationList && searchText && (
           <div className="location-list">
             {filteredLocations.length > 0 ? (
-              filteredLocations.slice(0, 50).map(loc => (
+              filteredLocations.map((loc, index) => (
                 <div
                   key={loc.value}
-                  className="location-item"
+                  className={`location-item ${index === activeIndex ? 'active' : ''}`}
                   onClick={() => {
                     setFormData(prev => ({ ...prev, codicePaese: loc.value }));
                     setSearchText(null);
