@@ -5,9 +5,15 @@
 
 import { elencoComuni } from './comuni.js';
 
+// Helper per formattare con iniziale maiuscola
+const formatTitleCase = (str) => {
+  if (!str) return '';
+  return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+};
+
 // Trasforma i dati da comuni.js nel formato richiesto
 const comuni = elencoComuni.map(([codice, sigla, nome]) => ({
-  label: `${nome} (${sigla})`,
+  label: `${formatTitleCase(nome)} (${sigla.toUpperCase()})`,
   value: codice
 }));
 
@@ -281,5 +287,9 @@ export const stati = [
  * Funzione per ottenere la lista combinata (comuni + stati)
  */
 export const getLocations = (estero = false) => {
-  return estero ? stati : comuni;
+  const list = estero ? stati : comuni;
+  if (estero) {
+    return list.map(s => ({ ...s, label: formatTitleCase(s.label) }));
+  }
+  return list;
 };

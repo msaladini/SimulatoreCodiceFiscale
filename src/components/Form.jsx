@@ -257,7 +257,8 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
           placeholder="Cerca comune o stato..."
           value={searchText || (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
           onChange={(e) => {
-            setSearchText(e.target.value);
+            const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+            setSearchText(formattedValue);
             setShowLocationList(true);
           }}
           onFocus={() => setShowLocationList(true)}
