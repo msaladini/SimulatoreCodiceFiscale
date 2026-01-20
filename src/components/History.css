@@ -107,11 +107,15 @@
 }
 
 .actions-cell {
+  vertical-align: middle;
+  padding: 0.5rem !important;
+}
+
+.actions-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem !important;
 }
 
 .btn-edit,

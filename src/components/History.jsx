@@ -121,27 +121,29 @@ export default function History({ calculations, onEdit }) {
                   <td>{item.luogoNascita}</td>
                   <td className="age-cell">{calculateAge(item.dataNascita)}</td>
                   <td className="actions-cell">
-                    <button
-                      className="btn-edit"
-                      onClick={() => handleEdit(item)}
-                      title="Modifica"
-                    >
-                      ✎
-                    </button>
-                    <button
-                      className="btn-copy"
-                      onClick={() => handleCopyToClipboard(item.codiceFiscale)}
-                      title="Copia codice fiscale"
-                    >
-                      📋
-                    </button>
-                    <button
-                      className="btn-delete"
-                      onClick={() => handleDelete(item.id)}
-                      title="Elimina"
-                    >
-                      ✕
-                    </button>
+                    <div className="actions-wrapper">
+                      <button
+                        className="btn-edit"
+                        onClick={() => handleEdit(item)}
+                        title="Modifica"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        className="btn-copy"
+                        onClick={() => handleCopyToClipboard(item.codiceFiscale)}
+                        title="Copia codice fiscale"
+                      >
+                        📋
+                      </button>
+                      <button
+                        className="btn-delete"
+                        onClick={() => handleDelete(item.id)}
+                        title="Elimina"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
