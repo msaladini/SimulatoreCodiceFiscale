@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://msaladini.github.io/SimulatoreCodiceFiscale/sitemap.xml
