@@ -55,7 +55,15 @@ export default function History({ calculations, onEdit }) {
 
   const calculateAge = (dataNascita) => {
     if (!dataNascita) return '-';
-    const birthDate = new Date(dataNascita);
+
+    let birthDate;
+    if (dataNascita.includes('/')) {
+      const [day, month, year] = dataNascita.split('/').map(n => parseInt(n));
+      birthDate = new Date(year, month - 1, day);
+    } else {
+      birthDate = new Date(dataNascita);
+    }
+
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
