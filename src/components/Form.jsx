@@ -299,7 +299,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
             placeholder="Inserisci cognome"
           />
           <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('cognome')}>
-            casino
+            auto_fix_high
           </span>
         </div>
       </div>
@@ -317,7 +317,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
             placeholder="Inserisci nome"
           />
           <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('nome')}>
-            casino
+            auto_fix_high
           </span>
         </div>
       </div>
@@ -349,7 +349,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
               placeholder="GG/MM/AAAA"
             />
             <span className="material-symbols-outlined input-icon random-date" onClick={() => handleRandomField('dataNascita')}>
-              casino
+              auto_fix_high
             </span>
             <span className="material-symbols-outlined input-icon calendar-btn" onClick={() => setShowAgeCalculator(!showAgeCalculator)}>
               cake
@@ -460,7 +460,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
             className="search-input"
           />
           <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('codicePaese')}>
-            casino
+            auto_fix_high
           </span>
         </div>
         {showLocationList && searchText && (
