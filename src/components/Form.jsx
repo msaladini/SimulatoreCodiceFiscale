@@ -15,6 +15,12 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     codicePaese: ''
   });
 
+  const [showAgeCalculator, setShowAgeCalculator] = useState(false);
+  const [ageInput, setAgeInput] = useState({
+    years: 18,
+    relativeTo: 'oggi' // 'ieri', 'oggi', 'domani'
+  });
+
   const [risultato, setRisultato] = useState('');
   const [errore, setErrore] = useState('');
   const [showCopyNotification, setShowCopyNotification] = useState(false);
@@ -32,11 +38,12 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   useEffect(() => {
     if (initialData) {
       const isEstero = initialData.codicePaese?.startsWith('Z') || false;
+      const formattedDataNascita = initialData.dataNascita ? initialData.dataNascita.split('-').reverse().join('/') : '';
       setFormData({
         cognome: initialData.cognome,
         nome: initialData.nome,
         sesso: initialData.sesso,
-        dataNascita: initialData.dataNascita,
+        dataNascita: formattedDataNascita,
         estero: isEstero,
         codicePaese: initialData.codicePaese || ''
       });
@@ -74,6 +81,14 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       newValue = newValue.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
     }
 
+    if (name === 'dataNascita') {
+      // Auto-format DD/MM/YYYY
+      newValue = newValue.replace(/\D/g, '');
+      if (newValue.length > 2) newValue = newValue.slice(0, 2) + '/' + newValue.slice(2);
+      if (newValue.length > 5) newValue = newValue.slice(0, 5) + '/' + newValue.slice(5, 9);
+      newValue = newValue.slice(0, 10);
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: newValue
@@ -99,11 +114,25 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       if (!formData.dataNascita) {
         throw new Error('Data di nascita è obbligatoria');
       }
+
+      const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+      const match = formData.dataNascita.match(dateRegex);
+      if (!match) {
+        throw new Error('Formato data non valido (richiesto GG/MM/AAAA)');
+      }
+
+      const day = parseInt(match[1]);
+      const month = parseInt(match[2]);
+      const year = parseInt(match[3]);
+      const dataNascita = new Date(year, month - 1, day);
+
+      if (dataNascita.getFullYear() !== year || dataNascita.getMonth() !== month - 1 || dataNascita.getDate() !== day) {
+        throw new Error('Data di nascita non valida');
+      }
+
       if (!formData.codicePaese) {
         throw new Error('Comune/Stato di nascita è obbligatorio');
       }
-
-      const dataNascita = new Date(formData.dataNascita);
       const cf = calcolaCodiceFiscale({
         cognome: formData.cognome,
         nome: formData.nome,
@@ -133,7 +162,66 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     }
   };
 
+  const handleRandomField = (field) => {
+    let newValue = '';
+
+    switch (field) {
+      case 'cognome':
+        newValue = elencoCognomi[Math.floor(Math.random() * elencoCognomi.length)];
+        setFormData(prev => ({ ...prev, cognome: newValue }));
+        break;
+      case 'nome':
+        const nomi = formData.sesso === 'M' ? elencoNomiMaschili : elencoNomiFemminili;
+        newValue = nomi[Math.floor(Math.random() * nomi.length)];
+        setFormData(prev => ({ ...prev, nome: newValue }));
+        break;
+      case 'dataNascita':
+        const year = Math.floor(Math.random() * 60) + 1960;
+        const month = Math.floor(Math.random() * 12) + 1;
+        const day = Math.floor(Math.random() * 28) + 1;
+        newValue = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+        setFormData(prev => ({ ...prev, dataNascita: newValue }));
+        break;
+      case 'sesso':
+        newValue = formData.sesso === 'M' ? 'F' : 'M';
+        setFormData(prev => ({ ...prev, sesso: newValue }));
+        break;
+      case 'codicePaese':
+        const comuni = getLocations(formData.estero);
+        const randomLoc = comuni[Math.floor(Math.random() * comuni.length)];
+        setFormData(prev => ({ ...prev, codicePaese: randomLoc.value }));
+        setSearchText(null);
+        break;
+      default:
+        break;
+    }
+    setIsDirty(true);
+  };
+
+  const handleApplyAge = () => {
+    const today = new Date();
+    let targetBaseDate = new Date(today);
+
+    if (ageInput.relativeTo === 'ieri') {
+      targetBaseDate.setDate(today.getDate() - 1);
+    } else if (ageInput.relativeTo === 'domani') {
+      targetBaseDate.setDate(today.getDate() + 1);
+    }
+
+    const birthYear = targetBaseDate.getFullYear() - ageInput.years;
+    const birthMonth = targetBaseDate.getMonth();
+    const birthDay = targetBaseDate.getDate();
+
+    const birthDate = new Date(birthYear, birthMonth, birthDay);
+    const dateString = `${String(birthDate.getDate()).padStart(2, '0')}/${String(birthDate.getMonth() + 1).padStart(2, '0')}/${birthDate.getFullYear()}`;
+
+    setFormData(prev => ({ ...prev, dataNascita: dateString }));
+    setShowAgeCalculator(false);
+    setIsDirty(true);
+  };
+
   const handleCodiceCasuale = () => {
+
     // Genera dati casuali per test
     const cognomeCasuale = elencoCognomi[Math.floor(Math.random() * elencoCognomi.length)];
     const sessoCasuale = Math.random() > 0.5 ? 'M' : 'F';
@@ -142,7 +230,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     const year = Math.floor(Math.random() * 60) + 1960;
     const month = Math.floor(Math.random() * 12) + 1;
     const day = Math.floor(Math.random() * 28) + 1;
-    const data = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const data = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
 
     const comuni = getLocations(false);
     const comuneCasuale = comuni[Math.floor(Math.random() * comuni.length)];
@@ -162,7 +250,8 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
     // Calcola il codice fiscale con i dati casuali generati
     try {
-      const dataNascita = new Date(data);
+      const parts = data.split('/');
+      const dataNascita = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
       const cf = calcolaCodiceFiscale({
         cognome: cognomeCasuale,
         nome: nomeCasuale,
@@ -197,53 +286,110 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
       <div className="form-group">
         <label htmlFor="cognome">Cognome</label>
-        <input
-          type="text"
-          id="cognome"
-          name="cognome"
-          value={formData.cognome}
-          onChange={handleInputChange}
-          onFocus={handleFocus}
-          placeholder="Inserisci cognome"
-        />
+        <div className="input-with-icon">
+          <input
+            type="text"
+            id="cognome"
+            name="cognome"
+            value={formData.cognome}
+            onChange={handleInputChange}
+            onFocus={handleFocus}
+            placeholder="Inserisci cognome"
+          />
+          <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('cognome')}>
+            casino
+          </span>
+        </div>
       </div>
 
       <div className="form-group">
         <label htmlFor="nome">Nome</label>
-        <input
-          type="text"
-          id="nome"
-          name="nome"
-          value={formData.nome}
-          onChange={handleInputChange}
-          onFocus={handleFocus}
-          placeholder="Inserisci nome"
-        />
+        <div className="input-with-icon">
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            value={formData.nome}
+            onChange={handleInputChange}
+            onFocus={handleFocus}
+            placeholder="Inserisci nome"
+          />
+          <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('nome')}>
+            casino
+          </span>
+        </div>
       </div>
 
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="sesso">Sesso</label>
-          <select
-            id="sesso"
-            name="sesso"
-            value={formData.sesso}
-            onChange={handleInputChange}
-          >
-            <option value="M">Maschile</option>
-            <option value="F">Femminile</option>
-          </select>
+          <div className="input-with-icon">
+            <select
+              id="sesso"
+              name="sesso"
+              value={formData.sesso}
+              onChange={handleInputChange}
+            >
+              <option value="M">Maschile</option>
+              <option value="F">Femminile</option>
+            </select>
+            <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('sesso')}>
+              casino
+            </span>
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="dataNascita">Data di nascita</label>
-          <input
-            type="date"
-            id="dataNascita"
-            name="dataNascita"
-            value={formData.dataNascita}
-            onChange={handleInputChange}
-          />
+          <div className="input-with-icon">
+            <input
+              type="text"
+              id="dataNascita"
+              name="dataNascita"
+              value={formData.dataNascita}
+              onChange={handleInputChange}
+              placeholder="GG/MM/AAAA"
+            />
+            <span className="material-symbols-outlined input-icon random-date" onClick={() => handleRandomField('dataNascita')}>
+              casino
+            </span>
+            <span className="material-symbols-outlined input-icon calendar-btn" onClick={() => setShowAgeCalculator(!showAgeCalculator)}>
+              cake
+            </span>
+            {showAgeCalculator && (
+              <div className="age-calculator-popover">
+                <div className="calculator-header">Calcola data di nascita</div>
+                <div className="calculator-body">
+                  <div className="calc-row">
+                    <label>Età (anni):</label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="150"
+                      value={ageInput.years}
+                      onChange={(e) => setAgeInput(prev => ({ ...prev, years: parseInt(e.target.value) || 0 }))}
+                      onFocus={handleFocus}
+                    />
+                  </div>
+                  <div className="calc-row">
+                    <label>In data:</label>
+                    <select
+                      value={ageInput.relativeTo}
+                      onChange={(e) => setAgeInput(prev => ({ ...prev, relativeTo: e.target.value }))}
+                    >
+                      <option value="ieri">Ieri</option>
+                      <option value="oggi">Oggi</option>
+                      <option value="domani">Domani</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="calculator-footer">
+                  <button className="btn-small btn-cancel" onClick={() => setShowAgeCalculator(false)}>Annulla</button>
+                  <button className="btn-small btn-confirm" onClick={handleApplyAge}>Conferma</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -262,58 +408,63 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         <label htmlFor="searchLocation">
           {formData.estero ? 'Stato di nascita' : 'Comune di nascita'}
         </label>
-        <input
-          type="text"
-          id="searchLocation"
-          placeholder="Cerca comune o stato..."
-          value={searchText !== null ? searchText : (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
-          onChange={(e) => {
-            const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
-            setSearchText(formattedValue);
-            setShowLocationList(true);
-            setActiveIndex(0);
-          }}
-          onKeyDown={(e) => {
-            if (!showLocationList || filteredLocations.length === 0) return;
+        <div className="input-with-icon">
+          <input
+            type="text"
+            id="searchLocation"
+            placeholder="Cerca comune o stato..."
+            value={searchText !== null ? searchText : (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
+            onChange={(e) => {
+              const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+              setSearchText(formattedValue);
+              setShowLocationList(true);
+              setActiveIndex(0);
+            }}
+            onKeyDown={(e) => {
+              if (!showLocationList || filteredLocations.length === 0) return;
 
-            if (e.key === 'ArrowDown') {
-              e.preventDefault();
-              setActiveIndex(prev => (prev < filteredLocations.length - 1 ? prev + 1 : prev));
-            } else if (e.key === 'ArrowUp') {
-              e.preventDefault();
-              setActiveIndex(prev => (prev > 0 ? prev - 1 : prev));
-            } else if (e.key === 'Enter' && activeIndex >= 0) {
-              e.preventDefault();
-              const selected = filteredLocations[activeIndex];
-              if (selected) {
-                setFormData(prev => ({ ...prev, codicePaese: selected.value }));
-                setSearchText(null);
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setActiveIndex(prev => (prev < filteredLocations.length - 1 ? prev + 1 : prev));
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setActiveIndex(prev => (prev > 0 ? prev - 1 : prev));
+              } else if (e.key === 'Enter' && activeIndex >= 0) {
+                e.preventDefault();
+                const selected = filteredLocations[activeIndex];
+                if (selected) {
+                  setFormData(prev => ({ ...prev, codicePaese: selected.value }));
+                  setSearchText(null);
+                  setShowLocationList(false);
+                  setIsDirty(true);
+                }
+              } else if (e.key === 'Escape') {
                 setShowLocationList(false);
-                setIsDirty(true);
+                setSearchText(null);
               }
-            } else if (e.key === 'Escape') {
-              setShowLocationList(false);
-              setSearchText(null);
-            }
-          }}
-          onFocus={(e) => {
-            const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
-            setSearchText(currentLabel);
-            setShowLocationList(true);
-            setActiveIndex(0);
-            handleFocus(e);
-          }}
-          onBlur={() => {
-            setTimeout(() => {
-              if (searchText === '') {
-                setFormData(prev => ({ ...prev, codicePaese: '' }));
-              }
-              setShowLocationList(false);
-              setSearchText(null);
-            }, 200);
-          }}
-          className="search-input"
-        />
+            }}
+            onFocus={(e) => {
+              const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
+              setSearchText(currentLabel);
+              setShowLocationList(true);
+              setActiveIndex(0);
+              handleFocus(e);
+            }}
+            onBlur={() => {
+              setTimeout(() => {
+                if (searchText === '') {
+                  setFormData(prev => ({ ...prev, codicePaese: '' }));
+                }
+                setShowLocationList(false);
+                setSearchText(null);
+              }, 200);
+            }}
+            className="search-input"
+          />
+          <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('codicePaese')}>
+            casino
+          </span>
+        </div>
         {showLocationList && searchText && (
           <div className="location-list">
             {filteredLocations.length > 0 ? (
