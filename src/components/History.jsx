@@ -121,14 +121,14 @@ export default function History({ calculations, onEdit }) {
             <tbody>
               {history.map(item => (
                 <tr key={item.id}>
-                  <td className="code-cell">
+                  <td className="code-cell" data-label="Codice fiscale">
                     <code>{item.codiceFiscale}</code>
                   </td>
-                  <td>{item.cognome}</td>
-                  <td>{item.nome}</td>
-                  <td>{item.luogoNascita}</td>
-                  <td className="age-cell">{calculateAge(item.dataNascita)}</td>
-                  <td className="actions-cell">
+                  <td data-label="Cognome">{item.cognome}</td>
+                  <td data-label="Nome">{item.nome}</td>
+                  <td data-label="Luogo di nascita">{item.luogoNascita}</td>
+                  <td className="age-cell" data-label="Età">{calculateAge(item.dataNascita)}</td>
+                  <td className="actions-cell" data-label="Azioni">
                     <div className="actions-wrapper">
                       <button
                         className="btn-edit"

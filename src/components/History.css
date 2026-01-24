@@ -251,3 +251,76 @@
     font-size: 0.7rem;
   }
 }
+
+@media (max-width: 600px) {
+  .table-wrapper {
+    border: none;
+    overflow-x: visible;
+  }
+
+  .history-table,
+  .history-table thead,
+  .history-table tbody,
+  .history-table th,
+  .history-table td,
+  .history-table tr {
+    display: block;
+  }
+
+  .history-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .history-table tbody tr {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .history-table td {
+    border: none;
+    position: relative;
+    padding: 0.75rem 0 !important;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #f9f9f9;
+    gap: 1rem;
+  }
+
+  .history-table td:last-child {
+    border-bottom: none;
+    margin-top: 0.5rem;
+  }
+
+  .history-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    flex-shrink: 0;
+    width: 40%;
+    text-align: left;
+  }
+
+  /* Specific handling for a better distribution */
+  .history-table td>*:not(::before) {
+    flex: 1;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .actions-wrapper {
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .age-cell {
+    text-align: right;
+  }
+}
