@@ -204,17 +204,21 @@
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .result-code {
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
   font-size: 2rem;
   font-weight: 700;
   color: white;
   font-family: 'Courier New', monospace;
+  width: max-content;
+  margin: 0 auto;
 }
 
 .code-part {
@@ -264,7 +268,8 @@
   }
 
   .result-code {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    gap: 0.4rem;
   }
 }
 
