@@ -1,0 +1,34 @@
+{
+    "M": [
+        "Chianti",
+        "Barolo",
+        "Nebbiolo",
+        "Brunello",
+        "Amarone",
+        "Prosecco",
+        "Dolcetto",
+        "Gavi",
+        "Soave",
+        "Frascati",
+        "Lambrusco",
+        "Morellino",
+        "Tignanello",
+        "Greco",
+        "Fiano",
+        "Primitivo",
+        "Negroamaro",
+        "Cannonau",
+        "Vermentino"
+    ],
+    "F": [
+        "Franciacorta",
+        "Lugana",
+        "Sassicaia",
+        "Ornellaia",
+        "Barbera",
+        "Falanghina",
+        "Passerina",
+        "Pecorino",
+        "Malvasia"
+    ]
+}

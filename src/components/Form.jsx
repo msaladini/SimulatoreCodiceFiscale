@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { calcolaCodiceFiscale } from '../utils/codiceFiscaleCalculator';
 import { getLocations } from '../data/locations';
-import { elencoNomiMaschili, elencoNomiFemminili } from '../data/nomi';
+import { getRandomNameAndGender } from '../utils/nameLoader';
 import { elencoCognomi } from '../data/cognomi';
 import './Form.css';
 
@@ -9,7 +9,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
   const [formData, setFormData] = useState({
     cognome: '',
     nome: '',
-    sesso: 'M',
+    sesso: '',
     dataNascita: '',
     estero: false,
     codicePaese: ''
@@ -64,6 +64,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     return (
       formData.cognome.trim() !== '' &&
       formData.nome.trim() !== '' &&
+      formData.sesso !== '' &&
       formData.dataNascita !== '' &&
       formData.codicePaese !== ''
     );
@@ -110,6 +111,9 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       }
       if (!formData.nome.trim()) {
         throw new Error('Nome è obbligatorio');
+      }
+      if (!formData.sesso) {
+        throw new Error('Sesso è obbligatorio');
       }
       if (!formData.dataNascita) {
         throw new Error('Data di nascita è obbligatoria');
@@ -171,9 +175,12 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         setFormData(prev => ({ ...prev, cognome: newValue }));
         break;
       case 'nome':
-        const nomi = formData.sesso === 'M' ? elencoNomiMaschili : elencoNomiFemminili;
-        newValue = nomi[Math.floor(Math.random() * nomi.length)];
-        setFormData(prev => ({ ...prev, nome: newValue }));
+        const { name, gender } = getRandomNameAndGender();
+        setFormData(prev => ({
+          ...prev,
+          nome: name,
+          sesso: gender
+        }));
         break;
       case 'dataNascita':
         const year = Math.floor(Math.random() * 60) + 1960;
@@ -181,10 +188,6 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         const day = Math.floor(Math.random() * 28) + 1;
         newValue = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
         setFormData(prev => ({ ...prev, dataNascita: newValue }));
-        break;
-      case 'sesso':
-        newValue = formData.sesso === 'M' ? 'F' : 'M';
-        setFormData(prev => ({ ...prev, sesso: newValue }));
         break;
       case 'codicePaese':
         const comuni = getLocations(formData.estero);
@@ -224,8 +227,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
     // Genera dati casuali per test
     const cognomeCasuale = elencoCognomi[Math.floor(Math.random() * elencoCognomi.length)];
-    const sessoCasuale = Math.random() > 0.5 ? 'M' : 'F';
-    const nomeCasuale = sessoCasuale === 'M' ? elencoNomiMaschili[Math.floor(Math.random() * elencoNomiMaschili.length)] : elencoNomiFemminili[Math.floor(Math.random() * elencoNomiFemminili.length)];
+    const { name: nomeCasuale, gender: sessoCasuale } = getRandomNameAndGender();
 
     const year = Math.floor(Math.random() * 60) + 1960;
     const month = Math.floor(Math.random() * 12) + 1;
@@ -323,20 +325,16 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="sesso">Sesso</label>
-          <div className="input-with-icon">
-            <select
-              id="sesso"
-              name="sesso"
-              value={formData.sesso}
-              onChange={handleInputChange}
-            >
-              <option value="M">Maschile</option>
-              <option value="F">Femminile</option>
-            </select>
-            <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('sesso')}>
-              casino
-            </span>
-          </div>
+          <select
+            id="sesso"
+            name="sesso"
+            value={formData.sesso}
+            onChange={handleInputChange}
+          >
+            <option value="" disabled>Seleziona...</option>
+            <option value="M">Maschile</option>
+            <option value="F">Femminile</option>
+          </select>
         </div>
 
         <div className="form-group">
@@ -498,31 +496,37 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
         </button>
       </div>
 
-      {errore && (
-        <div className="error-message">
-          {errore}
-        </div>
-      )}
-
-      {risultato && (
-        <div className="result-box">
-          <div className="result-code">
-            <span className="code-part">{risultato.substring(0, 3)}</span>
-            <span className="code-part">{risultato.substring(3, 6)}</span>
-            <span className="code-part">{risultato.substring(6, 8)}</span>
-            <span className="code-part">{risultato.substring(8, 9)}</span>
-            <span className="code-part">{risultato.substring(9, 11)}</span>
-            <span className="code-part">{risultato.substring(11, 15)}</span>
-            <span className="code-part">{risultato.substring(15, 16)}</span>
+      {
+        errore && (
+          <div className="error-message">
+            {errore}
           </div>
-        </div>
-      )}
+        )
+      }
 
-      {showCopyNotification && (
-        <div className="copy-notification">
-          ✓ Codice copiato negli appunti!
-        </div>
-      )}
-    </div>
+      {
+        risultato && (
+          <div className="result-box">
+            <div className="result-code">
+              <span className="code-part">{risultato.substring(0, 3)}</span>
+              <span className="code-part">{risultato.substring(3, 6)}</span>
+              <span className="code-part">{risultato.substring(6, 8)}</span>
+              <span className="code-part">{risultato.substring(8, 9)}</span>
+              <span className="code-part">{risultato.substring(9, 11)}</span>
+              <span className="code-part">{risultato.substring(11, 15)}</span>
+              <span className="code-part">{risultato.substring(15, 16)}</span>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        showCopyNotification && (
+          <div className="copy-notification">
+            ✓ Codice copiato negli appunti!
+          </div>
+        )
+      }
+    </div >
   );
 }
