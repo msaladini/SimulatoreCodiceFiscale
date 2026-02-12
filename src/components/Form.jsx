@@ -98,6 +98,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       setFormData(prev => ({ ...prev, codicePaese: '' }));
       setSearchText(null);
     }
+    setRisultato('');
     setIsDirty(true);
   };
 
@@ -198,6 +199,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
       default:
         break;
     }
+    setRisultato('');
     setIsDirty(true);
   };
 
@@ -220,6 +222,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
     setFormData(prev => ({ ...prev, dataNascita: dateString }));
     setShowAgeCalculator(false);
+    setRisultato('');
     setIsDirty(true);
   };
 
@@ -434,6 +437,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
                   setFormData(prev => ({ ...prev, codicePaese: selected.value }));
                   setSearchText(null);
                   setShowLocationList(false);
+                  setRisultato('');
                   setIsDirty(true);
                 }
               } else if (e.key === 'Escape') {
@@ -452,6 +456,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
               setTimeout(() => {
                 if (searchText === '') {
                   setFormData(prev => ({ ...prev, codicePaese: '' }));
+                  setRisultato('');
                 }
                 setShowLocationList(false);
                 setSearchText(null);
@@ -474,6 +479,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
                     setFormData(prev => ({ ...prev, codicePaese: loc.value }));
                     setSearchText(null);
                     setShowLocationList(false);
+                    setRisultato('');
                     setIsDirty(true);
                   }}
                 >
