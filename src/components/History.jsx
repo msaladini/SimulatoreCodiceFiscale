@@ -122,7 +122,12 @@ export default function History({ calculations, onEdit }) {
               {history.map(item => (
                 <tr key={item.id}>
                   <td className="code-cell" data-label="Codice fiscale">
-                    <code>{item.codiceFiscale}</code>
+                    <code
+                      onClick={() => handleCopyToClipboard(item.codiceFiscale)}
+                      title="Clicca per copiare"
+                    >
+                      {item.codiceFiscale}
+                    </code>
                   </td>
                   <td data-label="Cognome">{item.cognome}</td>
                   <td data-label="Nome">{item.nome}</td>
