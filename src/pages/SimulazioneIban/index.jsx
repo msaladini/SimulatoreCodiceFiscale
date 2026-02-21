@@ -92,6 +92,8 @@ function SimulazioneIban() {
                                 onChange={() => {
                                     setFilterType('italia')
                                     setSelectedCountry(IBAN_COUNTRIES.find(c => c.code === 'IT'))
+                                    setIbanInput('')
+                                    setValidationResult({ isValid: null, error: null })
                                 }}
                             />
                             Italia
@@ -104,8 +106,15 @@ function SimulazioneIban() {
                                 checked={filterType === 'sepa'}
                                 onChange={() => {
                                     setFilterType('sepa')
-                                    const firstSepa = IBAN_COUNTRIES.find(c => c.sepa && c.code !== 'IT')
-                                    setSelectedCountry(firstSepa || IBAN_COUNTRIES.find(c => c.sepa))
+                                    const sepaCountries = IBAN_COUNTRIES.filter(c => c.sepa && c.code !== 'IT')
+                                    if (sepaCountries.length > 0) {
+                                        const randomIndex = Math.floor(Math.random() * sepaCountries.length)
+                                        setSelectedCountry(sepaCountries[randomIndex])
+                                    } else {
+                                        setSelectedCountry(IBAN_COUNTRIES.find(c => c.sepa))
+                                    }
+                                    setIbanInput('')
+                                    setValidationResult({ isValid: null, error: null })
                                 }}
                             />
                             Area SEPA
@@ -118,7 +127,13 @@ function SimulazioneIban() {
                                 checked={filterType === 'non-sepa'}
                                 onChange={() => {
                                     setFilterType('non-sepa')
-                                    setSelectedCountry(IBAN_COUNTRIES.find(c => !c.sepa))
+                                    const nonSepaCountries = IBAN_COUNTRIES.filter(c => !c.sepa)
+                                    if (nonSepaCountries.length > 0) {
+                                        const randomIndex = Math.floor(Math.random() * nonSepaCountries.length)
+                                        setSelectedCountry(nonSepaCountries[randomIndex])
+                                    }
+                                    setIbanInput('')
+                                    setValidationResult({ isValid: null, error: null })
                                 }}
                             />
                             Non SEPA
