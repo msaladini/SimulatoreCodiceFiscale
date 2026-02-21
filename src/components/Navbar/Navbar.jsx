@@ -5,11 +5,17 @@ const navItems = [
     {
         to: '/',
         end: true,
+        icon: 'home',
+        label: 'Home',
+    },
+    {
+        to: '/calcolo-codice-fiscale',
+        end: false,
         icon: 'badge',
         label: 'Codice Fiscale',
     },
     {
-        to: '/decodifica',
+        to: '/decodifica-codice-fiscale',
         icon: 'manage_search',
         label: 'Decodifica CF',
     },
