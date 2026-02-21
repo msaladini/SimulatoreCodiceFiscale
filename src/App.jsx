@@ -1,36 +1,40 @@
-import { useState } from 'react'
+import { lazy, Suspense } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import Navbar from './components/Navbar/Navbar'
 import './App.css'
-import Form from './components/Form'
-import History from './components/History'
+
+const CodiceFiscale = lazy(() => import('./pages/CodiceFiscale'))
+const DecodificaCodiceFiscale = lazy(() => import('./pages/DecodificaCodiceFiscale'))
+const SimulazioneIban = lazy(() => import('./pages/SimulazioneIban'))
+const SimulazionePartitaIva = lazy(() => import('./pages/SimulazionePartitaIva'))
+
+const PAGE_TITLES = {
+  '/': 'Simulatore Calcolo Codice Fiscale',
+  '/decodifica': 'Decodifica Codice Fiscale',
+  '/iban': 'Simulatore Calcolo IBAN',
+  '/partita-iva': 'Simulatore Calcolo Partita IVA',
+}
 
 function App() {
-  const [lastCalculation, setLastCalculation] = useState(null)
-  const [formDataToEdit, setFormDataToEdit] = useState(null)
-
-  const handleCalcolo = (calcolo) => {
-    setLastCalculation(calcolo)
-  }
-
-  const handleEditFromHistory = (item) => {
-    setFormDataToEdit(item)
-  }
+  const { pathname } = useLocation()
+  const title = PAGE_TITLES[pathname] ?? 'Simulatori Fiscali'
 
   return (
     <div className="app-wrapper">
       <header className="app-header">
-        <h1>Simulatore Calcolo Codice Fiscale</h1>
+        <h1>{title}</h1>
+        <Navbar />
       </header>
 
       <main className="app-main">
-        <div className="content-container">
-          <div className="left-panel">
-            <Form onCalcolo={handleCalcolo} initialData={formDataToEdit} />
-          </div>
-
-          <div className="right-panel">
-            <History calculations={lastCalculation} onEdit={handleEditFromHistory} />
-          </div>
-        </div>
+        <Suspense fallback={<div className="page-loading">Caricamento...</div>}>
+          <Routes>
+            <Route path="/" element={<CodiceFiscale />} />
+            <Route path="/decodifica" element={<DecodificaCodiceFiscale />} />
+            <Route path="/iban" element={<SimulazioneIban />} />
+            <Route path="/partita-iva" element={<SimulazionePartitaIva />} />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   )
