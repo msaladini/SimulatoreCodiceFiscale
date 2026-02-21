@@ -1,0 +1,714 @@
+[
+  {
+    "code": "IT",
+    "name": "Italy",
+    "sepa": true,
+    "structure": "IT2!n1!a5!n5!n12!c",
+    "length": 27,
+    "bbanStructure": "1!a5!n5!n12!c"
+  },
+  {
+    "code": "AD",
+    "name": "Andorra",
+    "sepa": true,
+    "structure": "AD2!n4!n4!n12!c",
+    "length": 24,
+    "bbanStructure": "4!n4!n12!c"
+  },
+  {
+    "code": "AE",
+    "name": "United Arab Emirates (The)",
+    "sepa": false,
+    "structure": "AE2!n3!n16!n",
+    "length": 23,
+    "bbanStructure": "3!n16!n"
+  },
+  {
+    "code": "AL",
+    "name": "Albania",
+    "sepa": false,
+    "structure": "AL2!n8!n16!c",
+    "length": 28,
+    "bbanStructure": "8!n16!c"
+  },
+  {
+    "code": "AT",
+    "name": "Austria",
+    "sepa": true,
+    "structure": "AT2!n5!n11!n",
+    "length": 20,
+    "bbanStructure": "5!n11!n"
+  },
+  {
+    "code": "AZ",
+    "name": "Azerbaijan",
+    "sepa": false,
+    "structure": "AZ2!n4!a20!c",
+    "length": 28,
+    "bbanStructure": "4!a20!c"
+  },
+  {
+    "code": "BA",
+    "name": "Bosnia and Herzegovina",
+    "sepa": false,
+    "structure": "BA2!n3!n3!n8!n2!n",
+    "length": 20,
+    "bbanStructure": "3!n3!n8!n2!n"
+  },
+  {
+    "code": "BE",
+    "name": "Belgium",
+    "sepa": true,
+    "structure": "BE2!n3!n7!n2!n",
+    "length": 16,
+    "bbanStructure": "3!n7!n2!n"
+  },
+  {
+    "code": "BG",
+    "name": "Bulgaria",
+    "sepa": true,
+    "structure": "BG2!n4!a4!n2!n8!c",
+    "length": 22,
+    "bbanStructure": "4!a4!n2!n8!c"
+  },
+  {
+    "code": "BH",
+    "name": "Bahrain",
+    "sepa": false,
+    "structure": "BH2!n4!a14!c",
+    "length": 22,
+    "bbanStructure": "4!a14!c"
+  },
+  {
+    "code": "BI",
+    "name": "Burundi",
+    "sepa": false,
+    "structure": "BI2!n5!n5!n11!n2!n",
+    "length": 27,
+    "bbanStructure": "5!n5!n11!n2!n"
+  },
+  {
+    "code": "BR",
+    "name": "Brazil",
+    "sepa": false,
+    "structure": "BR2!n8!n5!n10!n1!a1!c",
+    "length": 29,
+    "bbanStructure": "8!n5!n10!n1!a1!c"
+  },
+  {
+    "code": "BY",
+    "name": "Belarus",
+    "sepa": false,
+    "structure": "BY2!n4!c4!n16!c",
+    "length": 28,
+    "bbanStructure": "4!c4!n16!c"
+  },
+  {
+    "code": "CH",
+    "name": "Switzerland",
+    "sepa": true,
+    "structure": "CH2!n5!n12!c",
+    "length": 21,
+    "bbanStructure": "5!n12!c"
+  },
+  {
+    "code": "CR",
+    "name": "Costa Rica",
+    "sepa": false,
+    "structure": "CR2!n4!n14!n",
+    "length": 22,
+    "bbanStructure": "4!n14!n"
+  },
+  {
+    "code": "CY",
+    "name": "Cyprus",
+    "sepa": true,
+    "structure": "CY2!n3!n5!n16!c",
+    "length": 28,
+    "bbanStructure": "3!n5!n16!c"
+  },
+  {
+    "code": "CZ",
+    "name": "Czechia",
+    "sepa": true,
+    "structure": "CZ2!n4!n6!n10!n",
+    "length": 24,
+    "bbanStructure": "4!n16!n"
+  },
+  {
+    "code": "DE",
+    "name": "Germany",
+    "sepa": true,
+    "structure": "DE2!n8!n10!n",
+    "length": 22,
+    "bbanStructure": "8!n10!n"
+  },
+  {
+    "code": "DJ",
+    "name": "Djibouti",
+    "sepa": false,
+    "structure": "DJ2!n5!n5!n11!n2!n",
+    "length": 27,
+    "bbanStructure": "5!n5!n11!n2!n"
+  },
+  {
+    "code": "DK",
+    "name": "Denmark",
+    "sepa": true,
+    "structure": "DK2!n4!n9!n1!n",
+    "length": 18,
+    "bbanStructure": "4!n9!n1!n"
+  },
+  {
+    "code": "DO",
+    "name": "Dominican Republic",
+    "sepa": false,
+    "structure": "DO2!n4!c20!n",
+    "length": 28,
+    "bbanStructure": "4!c20!n"
+  },
+  {
+    "code": "EE",
+    "name": "Estonia",
+    "sepa": true,
+    "structure": "EE2!n2!n14!n",
+    "length": 20,
+    "bbanStructure": "2!n14!n"
+  },
+  {
+    "code": "EG",
+    "name": "Egypt",
+    "sepa": false,
+    "structure": "EG2!n4!n4!n17!n",
+    "length": 29,
+    "bbanStructure": "4!n4!n17!n"
+  },
+  {
+    "code": "ES",
+    "name": "Spain",
+    "sepa": true,
+    "structure": "ES2!n4!n4!n1!n1!n10!n",
+    "length": 24,
+    "bbanStructure": "4!n4!n1!n1!n10!n"
+  },
+  {
+    "code": "FI",
+    "name": "Finland",
+    "sepa": true,
+    "structure": "FI2!n3!n11!n",
+    "length": 18,
+    "bbanStructure": "3!n11!n"
+  },
+  {
+    "code": "FK",
+    "name": "Falkland Islands (Malvinas)",
+    "sepa": false,
+    "structure": "FK2!n2!a12!n",
+    "length": 18,
+    "bbanStructure": "2!a12!n"
+  },
+  {
+    "code": "FO",
+    "name": "Faroe Islands",
+    "sepa": false,
+    "structure": "FO2!n4!n9!n1!n",
+    "length": 18,
+    "bbanStructure": "4!n9!n1!n"
+  },
+  {
+    "code": "FR",
+    "name": "France",
+    "sepa": true,
+    "structure": "FR2!n5!n5!n11!c2!n",
+    "length": 27,
+    "bbanStructure": "5!n5!n11!c2!n"
+  },
+  {
+    "code": "GB",
+    "name": "United Kingdom",
+    "sepa": true,
+    "structure": "GB2!n4!a6!n8!n",
+    "length": 22,
+    "bbanStructure": "4!a6!n8!n"
+  },
+  {
+    "code": "GE",
+    "name": "Georgia",
+    "sepa": false,
+    "structure": "GE2!n2!a16!n",
+    "length": 22,
+    "bbanStructure": "2!a16!n"
+  },
+  {
+    "code": "GI",
+    "name": "Gibraltar",
+    "sepa": true,
+    "structure": "GI2!n4!a15!c",
+    "length": 23,
+    "bbanStructure": "4!a15!c"
+  },
+  {
+    "code": "GL",
+    "name": "Greenland",
+    "sepa": false,
+    "structure": "GL2!n4!n9!n1!n",
+    "length": 18,
+    "bbanStructure": "4!n9!n1!n"
+  },
+  {
+    "code": "GR",
+    "name": "Greece",
+    "sepa": true,
+    "structure": "GR2!n3!n4!n16!c",
+    "length": 27,
+    "bbanStructure": "3!n4!n16!c"
+  },
+  {
+    "code": "GT",
+    "name": "Guatemala",
+    "sepa": false,
+    "structure": "GT2!n4!c20!c",
+    "length": 28,
+    "bbanStructure": "4!c20!c"
+  },
+  {
+    "code": "HN",
+    "name": "Honduras",
+    "sepa": false,
+    "structure": "HN2!n4!a20!n",
+    "length": 28,
+    "bbanStructure": "4!a20!n"
+  },
+  {
+    "code": "HR",
+    "name": "Croatia",
+    "sepa": true,
+    "structure": "HR2!n7!n10!n",
+    "length": 21,
+    "bbanStructure": "7!n10!n"
+  },
+  {
+    "code": "HU",
+    "name": "Hungary",
+    "sepa": true,
+    "structure": "HU2!n3!n4!n1!n15!n1!n",
+    "length": 28,
+    "bbanStructure": "3!n4!n1!n15!n1!n"
+  },
+  {
+    "code": "IE",
+    "name": "Ireland",
+    "sepa": true,
+    "structure": "IE2!n4!a6!n8!n",
+    "length": 22,
+    "bbanStructure": "4!a6!n8!n"
+  },
+  {
+    "code": "IL",
+    "name": "Israel",
+    "sepa": false,
+    "structure": "IL2!n3!n3!n13!n",
+    "length": 23,
+    "bbanStructure": "3!n3!n13!n"
+  },
+  {
+    "code": "IQ",
+    "name": "Iraq",
+    "sepa": false,
+    "structure": "IQ2!n4!a3!n12!n",
+    "length": 23,
+    "bbanStructure": "4!a3!n12!n"
+  },
+  {
+    "code": "IS",
+    "name": "Iceland",
+    "sepa": true,
+    "structure": "IS2!n4!n2!n6!n10!n",
+    "length": 26,
+    "bbanStructure": "4!n2!n6!n10!n"
+  },
+  {
+    "code": "JO",
+    "name": "Jordan",
+    "sepa": false,
+    "structure": "JO2!n4!a4!n18!c",
+    "length": 30,
+    "bbanStructure": "4!a4!n18!c"
+  },
+  {
+    "code": "KW",
+    "name": "Kuwait",
+    "sepa": false,
+    "structure": "KW2!n4!a22!c",
+    "length": 30,
+    "bbanStructure": "4!a22!c"
+  },
+  {
+    "code": "KZ",
+    "name": "Kazakhstan",
+    "sepa": false,
+    "structure": "KZ2!n3!n13!c",
+    "length": 20,
+    "bbanStructure": "3!n13!c"
+  },
+  {
+    "code": "LB",
+    "name": "Lebanon",
+    "sepa": false,
+    "structure": "LB2!n4!n20!c",
+    "length": 28,
+    "bbanStructure": "4!n20!c"
+  },
+  {
+    "code": "LC",
+    "name": "Saint Lucia",
+    "sepa": false,
+    "structure": "LC2!n4!a24!c",
+    "length": 32,
+    "bbanStructure": "4!a24!c"
+  },
+  {
+    "code": "LI",
+    "name": "Liechtenstein",
+    "sepa": true,
+    "structure": "LI2!n5!n12!c",
+    "length": 21,
+    "bbanStructure": "5!n12!c"
+  },
+  {
+    "code": "LT",
+    "name": "Lithuania",
+    "sepa": true,
+    "structure": "LT2!n5!n11!n",
+    "length": 20,
+    "bbanStructure": "5!n11!n"
+  },
+  {
+    "code": "LU",
+    "name": "Luxembourg",
+    "sepa": true,
+    "structure": "LU2!n3!n13!c",
+    "length": 20,
+    "bbanStructure": "3!n13!c"
+  },
+  {
+    "code": "LV",
+    "name": "Latvia",
+    "sepa": true,
+    "structure": "LV2!n4!a13!c",
+    "length": 21,
+    "bbanStructure": "4!a13!c"
+  },
+  {
+    "code": "LY",
+    "name": "Libya",
+    "sepa": false,
+    "structure": "LY2!n3!n3!n15!n",
+    "length": 25,
+    "bbanStructure": "3!n3!n15!n"
+  },
+  {
+    "code": "MC",
+    "name": "Monaco",
+    "sepa": true,
+    "structure": "MC2!n5!n5!n11!c2!n",
+    "length": 27,
+    "bbanStructure": "5!n5!n11!c2!n"
+  },
+  {
+    "code": "MD",
+    "name": "Moldova, Republic of",
+    "sepa": false,
+    "structure": "MD2!n2!c18!c",
+    "length": 24,
+    "bbanStructure": "2!c18!c"
+  },
+  {
+    "code": "ME",
+    "name": "Montenegro",
+    "sepa": false,
+    "structure": "ME2!n3!n13!n2!n",
+    "length": 22,
+    "bbanStructure": "3!n13!n2!n"
+  },
+  {
+    "code": "MK",
+    "name": "North Macedonia",
+    "sepa": false,
+    "structure": "MK2!n3!n10!c2!n",
+    "length": 19,
+    "bbanStructure": "3!n10!c2!n"
+  },
+  {
+    "code": "MN",
+    "name": "Mongolia",
+    "sepa": false,
+    "structure": "MN2!n4!n12!n",
+    "length": 20,
+    "bbanStructure": "4!n12!n"
+  },
+  {
+    "code": "MR",
+    "name": "Mauritania",
+    "sepa": false,
+    "structure": "MR2!n5!n5!n11!n2!n",
+    "length": 27,
+    "bbanStructure": "5!n5!n11!n2!n"
+  },
+  {
+    "code": "MT",
+    "name": "Malta",
+    "sepa": true,
+    "structure": "MT2!n4!a5!n18!c",
+    "length": 31,
+    "bbanStructure": "4!a5!n18!c"
+  },
+  {
+    "code": "MU",
+    "name": "Mauritius",
+    "sepa": false,
+    "structure": "MU2!n4!a2!n2!n12!n3!n3!a",
+    "length": 30,
+    "bbanStructure": "4!a2!n2!n12!n3!n3!a"
+  },
+  {
+    "code": "NI",
+    "name": "Nicaragua",
+    "sepa": false,
+    "structure": "NI2!n4!a20!n",
+    "length": 28,
+    "bbanStructure": "4!a20!n"
+  },
+  {
+    "code": "NL",
+    "name": "Netherlands (The)",
+    "sepa": true,
+    "structure": "NL2!n4!a10!n",
+    "length": 18,
+    "bbanStructure": "4!a10!n"
+  },
+  {
+    "code": "NO",
+    "name": "Norway",
+    "sepa": true,
+    "structure": "NO2!n4!n6!n1!n",
+    "length": 15,
+    "bbanStructure": "4!n6!n1!n"
+  },
+  {
+    "code": "OM",
+    "name": "Oman",
+    "sepa": false,
+    "structure": "OM2!n3!n16!c",
+    "length": 23,
+    "bbanStructure": "3!n16!c"
+  },
+  {
+    "code": "PK",
+    "name": "Pakistan",
+    "sepa": false,
+    "structure": "PK2!n4!a16!c",
+    "length": 24,
+    "bbanStructure": "4!a16!c"
+  },
+  {
+    "code": "PL",
+    "name": "Poland",
+    "sepa": true,
+    "structure": "PL2!n8!n16!n",
+    "length": 28,
+    "bbanStructure": "8!n16!n"
+  },
+  {
+    "code": "PS",
+    "name": "Palestine, State of",
+    "sepa": false,
+    "structure": "PS2!n4!a21!c",
+    "length": 29,
+    "bbanStructure": "4!a21!c"
+  },
+  {
+    "code": "PT",
+    "name": "Portugal",
+    "sepa": true,
+    "structure": "PT2!n4!n4!n11!n2!n",
+    "length": 25,
+    "bbanStructure": "4!n4!n11!n2!n"
+  },
+  {
+    "code": "QA",
+    "name": "Qatar",
+    "sepa": false,
+    "structure": "QA2!n4!a21!c",
+    "length": 29,
+    "bbanStructure": "4!a21!c"
+  },
+  {
+    "code": "RO",
+    "name": "Romania",
+    "sepa": true,
+    "structure": "RO2!n4!a16!c",
+    "length": 24,
+    "bbanStructure": "4!a16!c"
+  },
+  {
+    "code": "RS",
+    "name": "Serbia",
+    "sepa": false,
+    "structure": "RS2!n3!n13!n2!n",
+    "length": 22,
+    "bbanStructure": "3!n13!n2!n"
+  },
+  {
+    "code": "RU",
+    "name": "Russian Federation",
+    "sepa": false,
+    "structure": "RU2!n9!n5!n15!c",
+    "length": 33,
+    "bbanStructure": "9!n5!n15!c"
+  },
+  {
+    "code": "SA",
+    "name": "Saudi Arabia",
+    "sepa": false,
+    "structure": "SA2!n2!n18!c",
+    "length": 24,
+    "bbanStructure": "2!n18!c"
+  },
+  {
+    "code": "SC",
+    "name": "Seychelles",
+    "sepa": false,
+    "structure": "SC2!n4!a2!n2!n16!n3!a",
+    "length": 31,
+    "bbanStructure": "4!a2!n2!n16!n3!a"
+  },
+  {
+    "code": "SD",
+    "name": "Sudan",
+    "sepa": false,
+    "structure": "SD2!n2!n12!n",
+    "length": 18,
+    "bbanStructure": "2!n12!n"
+  },
+  {
+    "code": "SE",
+    "name": "Sweden",
+    "sepa": true,
+    "structure": "SE2!n3!n16!n1!n",
+    "length": 24,
+    "bbanStructure": "3!n16!n1!n"
+  },
+  {
+    "code": "SI",
+    "name": "Slovenia",
+    "sepa": true,
+    "structure": "SI2!n5!n8!n2!n",
+    "length": 19,
+    "bbanStructure": "5!n8!n2!n"
+  },
+  {
+    "code": "SK",
+    "name": "Slovakia",
+    "sepa": true,
+    "structure": "SK2!n4!n6!n10!n",
+    "length": 24,
+    "bbanStructure": "4!n6!n10!n"
+  },
+  {
+    "code": "SM",
+    "name": "San Marino",
+    "sepa": true,
+    "structure": "SM2!n1!a5!n5!n12!c",
+    "length": 27,
+    "bbanStructure": "1!a5!n5!n12!c"
+  },
+  {
+    "code": "SO",
+    "name": "Somalia",
+    "sepa": false,
+    "structure": "SO2!n4!n3!n12!n",
+    "length": 23,
+    "bbanStructure": "4!n3!n12!n"
+  },
+  {
+    "code": "ST",
+    "name": "Sao Tome and Principe",
+    "sepa": false,
+    "structure": "ST2!n4!n4!n11!n2!n",
+    "length": 25,
+    "bbanStructure": "4!n4!n11!n2!n"
+  },
+  {
+    "code": "SV",
+    "name": "El Salvador",
+    "sepa": false,
+    "structure": "SV2!n4!a20!n",
+    "length": 28,
+    "bbanStructure": "4!a20!n"
+  },
+  {
+    "code": "TL",
+    "name": "Timor - Leste",
+    "sepa": false,
+    "structure": "TL2!n3!n14!n2!n",
+    "length": 23,
+    "bbanStructure": "3!n14!n2!n"
+  },
+  {
+    "code": "TN",
+    "name": "Tunisia",
+    "sepa": false,
+    "structure": "TN2!n2!n3!n13!n2!n",
+    "length": 24,
+    "bbanStructure": "2!n3!n13!n2!n"
+  },
+  {
+    "code": "TR",
+    "name": "Turkiye",
+    "sepa": false,
+    "structure": "TR2!n5!n1!n16!c",
+    "length": 26,
+    "bbanStructure": "5!n1!n16!c"
+  },
+  {
+    "code": "UA",
+    "name": "Ukraine",
+    "sepa": false,
+    "structure": "UA2!n6!n19!c",
+    "length": 29,
+    "bbanStructure": "6!n19!c"
+  },
+  {
+    "code": "VA",
+    "name": "Holy See",
+    "sepa": true,
+    "structure": "VA2!n3!n15!n",
+    "length": 22,
+    "bbanStructure": "3!n15!n"
+  },
+  {
+    "code": "VG",
+    "name": "Virgin Islands (British)",
+    "sepa": false,
+    "structure": "VG2!n4!a16!n",
+    "length": 24,
+    "bbanStructure": "4!a16!n"
+  },
+  {
+    "code": "XK",
+    "name": "Kosovo",
+    "sepa": false,
+    "structure": "XK2!n4!n10!n2!n",
+    "length": 20,
+    "bbanStructure": "4!n10!n2!n"
+  },
+  {
+    "code": "YE",
+    "name": "Yemen",
+    "sepa": false,
+    "structure": "YE2!n4!a4!n18!c",
+    "length": 30,
+    "bbanStructure": "4!a4!n18!c"
+  }
+]

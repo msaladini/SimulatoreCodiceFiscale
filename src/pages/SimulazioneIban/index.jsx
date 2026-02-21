@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IBAN_COUNTRIES } from './ibanData'
-import { generateIban, validateIban } from './ibanUtils'
+import { generateIban, validateIban, breakdownBban } from './ibanUtils'
 import './SimulazioneIban.css'
 
 function SimulazioneIban() {
@@ -122,17 +122,19 @@ function SimulazioneIban() {
                     <div className="iban-details animate-in">
                         <div className="details-vertical">
                             <div className="detail-item">
-                                <span className="detail-label">Codice Paese</span>
-                                <span className="detail-value">{ibanInput.substring(0, 2)}</span>
+                                <span className="detail-label">Paese</span>
+                                <span className="detail-value">{selectedCountry.name} ({ibanInput.substring(0, 2)})</span>
                             </div>
                             <div className="detail-item">
                                 <span className="detail-label">Check Digits</span>
                                 <span className="detail-value">{ibanInput.substring(2, 4)}</span>
                             </div>
-                            <div className="detail-item">
-                                <span className="detail-label">Paese Rilevato</span>
-                                <span className="detail-value">{selectedCountry.name}</span>
-                            </div>
+                            {breakdownBban(ibanInput.substring(4), selectedCountry.bbanStructure).map((part, i) => (
+                                <div key={i} className="detail-item">
+                                    <span className="detail-label">BBAN {part.label}</span>
+                                    <span className="detail-value">{part.value}</span>
+                                </div>
+                            ))}
                             <div className="detail-item">
                                 <span className="detail-label">Lunghezza Attesa</span>
                                 <span className="detail-value">{selectedCountry.length} caratteri</span>

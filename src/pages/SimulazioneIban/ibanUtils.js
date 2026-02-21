@@ -66,6 +66,24 @@ export function validateIban(iban) {
 }
 
 /**
+ * Parses a BBAN structure string (e.g., '1!a5!n12!c') into components.
+ * @param {string} bbanStructure The structure string.
+ * @returns {Array<{length: number, type: string}>} Array of components.
+ */
+export function parseBbanStructure(bbanStructure) {
+    const components = [];
+    const regex = /(\d+)!?([a-zA-Z])/g;
+    let match;
+    while ((match = regex.exec(bbanStructure)) !== null) {
+        components.push({
+            length: parseInt(match[1], 10),
+            type: match[2].toLowerCase()
+        });
+    }
+    return components;
+}
+
+/**
  * Generates a random valid IBAN for a given country code.
  * @param {string} countryCode The country code (e.g., 'IT').
  * @returns {string} A valid IBAN.
@@ -75,14 +93,16 @@ export function generateIban(countryCode) {
     if (!country) throw new Error('Paese non supportato');
 
     let bban = '';
-    country.bban.components.forEach(comp => {
+    const components = parseBbanStructure(country.bbanStructure || '');
+
+    components.forEach(comp => {
         for (let i = 0; i < comp.length; i++) {
             if (comp.type === 'n') {
                 bban += Math.floor(Math.random() * 10).toString();
             } else if (comp.type === 'a') {
                 bban += String.fromCharCode(65 + Math.floor(Math.random() * 26));
             } else {
-                // alphanumeric
+                // c = alphanumeric
                 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 bban += chars.charAt(Math.floor(Math.random() * chars.length));
             }
@@ -114,4 +134,31 @@ export function chunkIban(iban) {
         chunks.push(clean.substring(i, i + 4));
     }
     return chunks;
+}
+
+/**
+ * Breaks down a BBAN string into its structural components based on the registry rules.
+ * @param {string} bban The BBAN string.
+ * @param {string} bbanStructure The structure definition (e.g., '1!a5!n12!c').
+ * @returns {Array<{label: string, value: string}>} The parts to display.
+ */
+export function breakdownBban(bban, bbanStructure) {
+    if (!bbanStructure) return [];
+
+    const components = parseBbanStructure(bbanStructure);
+    const result = [];
+    let currentIndex = 0;
+
+    components.forEach((comp, i) => {
+        const part = bban.substring(currentIndex, currentIndex + comp.length);
+        if (part) {
+            result.push({
+                label: `Parte ${i + 1} (${comp.length}!${comp.type})`,
+                value: part
+            });
+            currentIndex += comp.length;
+        }
+    });
+
+    return result;
 }
