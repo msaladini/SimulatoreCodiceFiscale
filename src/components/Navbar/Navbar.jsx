@@ -14,14 +14,14 @@ const navItems = [
         label: 'Decodifica CF',
     },
     {
-        to: '/iban',
-        icon: 'account_balance',
-        label: 'Calcolo IBAN',
-    },
-    {
         to: '/partita-iva',
         icon: 'receipt_long',
         label: 'Partita IVA',
+    },
+    {
+        to: '/iban',
+        icon: 'account_balance',
+        label: 'Calcolo IBAN',
     },
 ]
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Form from '../../components/Form'
-import History from '../../components/History'
+import Form from './Form'
+import History from './History'
 import '../../App.css'
 
 function CodiceFiscale() {
