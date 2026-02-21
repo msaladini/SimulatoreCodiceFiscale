@@ -164,6 +164,13 @@
     align-items: center;
 }
 
+.status-icon {
+    position: absolute;
+    right: 1rem;
+    font-size: 1.5rem;
+    pointer-events: none;
+}
+
 .iban-text-input {
     width: 100%;
     padding: 1rem;
@@ -187,18 +194,41 @@
     background: #fef2f2;
 }
 
-.status-icon {
-    position: absolute;
-    right: 1rem;
-    font-size: 1.5rem;
+.input-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-.status-icon.valid {
-    color: #10b981;
+.input-header-row label {
+    margin-bottom: 0;
 }
 
-.status-icon.invalid {
-    color: #ef4444;
+.copy-label-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #e0e7ff;
+    color: var(--primary-color, #2563eb);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.copy-label-btn:hover {
+    background: #c7d2fe;
+    transform: translateY(-1px);
+}
+
+.label-icon {
+    font-size: 1rem;
 }
 
 .main-card-footer {

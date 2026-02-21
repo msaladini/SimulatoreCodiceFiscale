@@ -164,13 +164,26 @@ function SimulazioneIban() {
                 </div>
 
                 <div className="iban-input-section">
-                    <label htmlFor="iban-input">Codice IBAN (senza spazi)</label>
+                    <div className="input-header-row">
+                        <label htmlFor="iban-input">Codice IBAN (senza spazi)</label>
+                        {validationResult.isValid === true && ibanInput && (
+                            <button
+                                className="copy-label-btn"
+                                onClick={() => copyToClipboard(ibanInput)}
+                                type="button"
+                            >
+                                COPIA
+                                <span className="material-symbols-outlined label-icon">content_copy</span>
+                            </button>
+                        )}
+                    </div>
                     <div className="input-with-status">
                         <input
                             id="iban-input"
                             type="text"
                             value={ibanInput}
                             onChange={handleInputChange}
+                            onFocus={(e) => e.target.select()}
                             placeholder="ESEMPIO: IT60X0123456789012345678901"
                             className={`iban-text-input ${validationResult.isValid === true ? 'valid' : validationResult.isValid === false ? 'invalid' : ''}`}
                             spellCheck="false"
