@@ -28,6 +28,8 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     const [showLocationList, setShowLocationList] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [showHistoryNotification, setShowHistoryNotification] = useState(false);
+    const [highlightForm, setHighlightForm] = useState(false);
 
     const locations = getLocations(formData.estero);
 
@@ -51,6 +53,12 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
             setRisultato('');
             setErrore('');
             setIsDirty(false);
+
+            // Effetto visivo per caricamento dati dallo storico
+            setShowHistoryNotification(true);
+            setHighlightForm(true);
+            setTimeout(() => setShowHistoryNotification(false), 3000);
+            setTimeout(() => setHighlightForm(false), 1000);
         }
     }, [initialData]);
 
@@ -286,7 +294,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     };
 
     return (
-        <div className="form-container">
+        <div className={`form-container ${highlightForm ? 'highlight-active' : ''}`}>
             <h2>Dati per il calcolo</h2>
 
             <div className="form-group">
@@ -530,6 +538,15 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
                 showCopyNotification && (
                     <div className="copy-notification">
                         ✓ Codice copiato negli appunti!
+                    </div>
+                )
+            }
+
+            {
+                showHistoryNotification && (
+                    <div className="copy-notification history-notification">
+                        <span className="material-symbols-outlined">history</span>
+                        Dati caricati dallo storico
                     </div>
                 )
             }

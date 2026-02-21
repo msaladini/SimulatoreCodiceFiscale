@@ -3,6 +3,29 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s, border-color 0.3s;
+  border: 2px solid transparent;
+}
+
+.form-container.highlight-active {
+  animation: highlight-pulse 1s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+    border-color: #4f46e5;
+  }
+
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+  }
 }
 
 .form-container h2 {
@@ -251,6 +274,17 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+}
+
+.history-notification {
+  background-color: #4f46e5;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.history-notification .material-symbols-outlined {
+  font-size: 1.25rem;
 }
 
 @media (max-width: 768px) {
