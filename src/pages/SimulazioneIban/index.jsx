@@ -5,9 +5,18 @@ import './SimulazioneIban.css'
 
 function SimulazioneIban() {
     const [selectedCountry, setSelectedCountry] = useState(IBAN_COUNTRIES[0])
+    const [filterType, setFilterType] = useState('italia') // 'italia', 'sepa', 'non-sepa'
     const [ibanInput, setIbanInput] = useState('')
     const [validationResult, setValidationResult] = useState({ isValid: null, error: null })
     const [showCopyNotification, setShowCopyNotification] = useState(false)
+
+    // Derived filtered countries
+    const filteredCountries = IBAN_COUNTRIES.filter(country => {
+        if (filterType === 'italia') return country.code === 'IT'
+        if (filterType === 'sepa') return country.sepa
+        if (filterType === 'non-sepa') return !country.sepa
+        return true
+    })
 
     const copyToClipboard = (text) => {
         const clean = text.replace(/\s+/g, '');
@@ -38,8 +47,19 @@ function SimulazioneIban() {
         if (value.length >= 2) {
             const countryCode = value.substring(0, 2)
             const country = IBAN_COUNTRIES.find(c => c.code === countryCode)
-            if (country && country.code !== selectedCountry.code) {
-                setSelectedCountry(country)
+            if (country) {
+                // Auto-switch filter tab if needed
+                if (country.code === 'IT') {
+                    if (filterType !== 'italia') setFilterType('italia')
+                } else if (country.sepa) {
+                    if (filterType !== 'sepa') setFilterType('sepa')
+                } else {
+                    if (filterType !== 'non-sepa') setFilterType('non-sepa')
+                }
+
+                if (country.code !== selectedCountry.code) {
+                    setSelectedCountry(country)
+                }
             }
         }
 
@@ -62,6 +82,49 @@ function SimulazioneIban() {
                 </header>
 
                 <div className="iban-controls">
+                    <div className="filter-group">
+                        <label className={`filter-option ${filterType === 'italia' ? 'active' : ''}`}>
+                            <input
+                                type="radio"
+                                name="ibanFilter"
+                                value="italia"
+                                checked={filterType === 'italia'}
+                                onChange={() => {
+                                    setFilterType('italia')
+                                    setSelectedCountry(IBAN_COUNTRIES.find(c => c.code === 'IT'))
+                                }}
+                            />
+                            Italia
+                        </label>
+                        <label className={`filter-option ${filterType === 'sepa' ? 'active' : ''}`}>
+                            <input
+                                type="radio"
+                                name="ibanFilter"
+                                value="sepa"
+                                checked={filterType === 'sepa'}
+                                onChange={() => {
+                                    setFilterType('sepa')
+                                    const firstSepa = IBAN_COUNTRIES.find(c => c.sepa && c.code !== 'IT')
+                                    setSelectedCountry(firstSepa || IBAN_COUNTRIES.find(c => c.sepa))
+                                }}
+                            />
+                            Area SEPA
+                        </label>
+                        <label className={`filter-option ${filterType === 'non-sepa' ? 'active' : ''}`}>
+                            <input
+                                type="radio"
+                                name="ibanFilter"
+                                value="non-sepa"
+                                checked={filterType === 'non-sepa'}
+                                onChange={() => {
+                                    setFilterType('non-sepa')
+                                    setSelectedCountry(IBAN_COUNTRIES.find(c => !c.sepa))
+                                }}
+                            />
+                            Non SEPA
+                        </label>
+                    </div>
+
                     <div className="control-group">
                         <label htmlFor="country-select">Seleziona Paese</label>
                         <select
@@ -69,8 +132,9 @@ function SimulazioneIban() {
                             value={selectedCountry.code}
                             onChange={handleCountryChange}
                             className="iban-select"
+                            disabled={filterType === 'italia'}
                         >
-                            {IBAN_COUNTRIES.map(country => (
+                            {filteredCountries.map(country => (
                                 <option key={country.code} value={country.code}>
                                     {country.name} ({country.code})
                                 </option>
