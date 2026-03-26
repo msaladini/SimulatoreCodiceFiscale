@@ -29,16 +29,18 @@ function App() {
       </header>
 
       <main className="app-main">
-        <Suspense fallback={<div className="page-loading">Caricamento...</div>}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/calcolo-codice-fiscale" element={<CodiceFiscale />} />
-            <Route path="/decodifica-codice-fiscale" element={<DecodificaCodiceFiscale />} />
-            <Route path="/iban" element={<SimulazioneIban />} />
-            <Route path="/partita-iva" element={<SimulazionePartitaIva />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Suspense>
+        <div className="main-content">
+          <Suspense fallback={<div className="page-loading">Caricamento...</div>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/calcolo-codice-fiscale" element={<CodiceFiscale />} />
+              <Route path="/decodifica-codice-fiscale" element={<DecodificaCodiceFiscale />} />
+              <Route path="/iban" element={<SimulazioneIban />} />
+              <Route path="/partita-iva" element={<SimulazionePartitaIva />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
+        </div>
       </main>
     </div>
   )
