@@ -1,8 +1,9 @@
 .history-container {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--bg-card, #ffffff);
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .history-header {
@@ -19,22 +20,32 @@
 }
 
 .btn-clear {
-  padding: 0.6rem 1.2rem;
-  background-color: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
-  border-radius: 4px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
   font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  transition: all 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .btn-clear:hover {
-  background-color: #fee2e2;
-  border-color: #f87171;
+  background: #fecaca;
+  color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);
+}
+
+.btn-clear:active {
+  transform: translateY(0);
 }
 
 .empty-state {

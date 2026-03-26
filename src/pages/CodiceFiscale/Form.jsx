@@ -294,219 +294,239 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
     };
 
     return (
-        <div className={`form-container ${highlightForm ? 'highlight-active' : ''}`}>
-            <h2>Dati per il calcolo</h2>
-
-            <div className="form-group">
-                <label htmlFor="cognome">Cognome</label>
-                <div className="input-with-icon">
-                    <input
-                        type="text"
-                        id="cognome"
-                        name="cognome"
-                        value={formData.cognome}
-                        onChange={handleInputChange}
-                        onFocus={handleFocus}
-                        placeholder="Inserisci cognome"
-                    />
-                    <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('cognome')}>
-                        auto_fix_high
-                    </span>
+        <div className={`cf-card ${highlightForm ? 'highlight-active' : ''}`}>
+            <header className="cf-card-header">
+                <span className="material-symbols-outlined header-icon">badge</span>
+                <div className="header-text">
+                    <h2>Calcolo Codice Fiscale</h2>
+                    <p>Inserisci i tuoi dati per calcolare il Codice Fiscale, oppure genera un codice casuale.</p>
                 </div>
+            </header>
+
+            <div className="cf-controls">
+                <button className="cf-btn primary" onClick={handleCodiceCasuale}>
+                    <span className="material-symbols-outlined">autofps_select</span>
+                    Genera codice casuale
+                </button>
             </div>
 
-            <div className="form-group">
-                <label htmlFor="nome">Nome</label>
-                <div className="input-with-icon">
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        value={formData.nome}
-                        onChange={handleInputChange}
-                        onFocus={handleFocus}
-                        placeholder="Inserisci nome"
-                    />
-                    <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('nome')}>
-                        auto_fix_high
-                    </span>
-                </div>
-            </div>
+            <div className="cf-input-section">
+                <div className="form-row">
+                    <div className="form-group">
+                        <label htmlFor="cognome">Cognome</label>
+                        <div className="input-with-icon">
+                            <input
+                                type="text"
+                                id="cognome"
+                                name="cognome"
+                                value={formData.cognome}
+                                onChange={handleInputChange}
+                                onFocus={handleFocus}
+                                placeholder="Inserisci cognome"
+                                className="cf-text-input"
+                            />
+                            <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('cognome')}>
+                                auto_fix_high
+                            </span>
+                        </div>
+                    </div>
 
-            <div className="form-row">
-                <div className="form-group">
-                    <label htmlFor="sesso">Sesso</label>
-                    <select
-                        id="sesso"
-                        name="sesso"
-                        value={formData.sesso}
-                        onChange={handleInputChange}
-                    >
-                        <option value="" disabled>Seleziona...</option>
-                        <option value="M">Maschile</option>
-                        <option value="F">Femminile</option>
-                    </select>
+                    <div className="form-group">
+                        <label htmlFor="nome">Nome</label>
+                        <div className="input-with-icon">
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                value={formData.nome}
+                                onChange={handleInputChange}
+                                onFocus={handleFocus}
+                                placeholder="Inserisci nome"
+                                className="cf-text-input"
+                            />
+                            <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('nome')}>
+                                auto_fix_high
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label htmlFor="sesso">Sesso</label>
+                        <select
+                            id="sesso"
+                            name="sesso"
+                            value={formData.sesso}
+                            onChange={handleInputChange}
+                            className="cf-select"
+                        >
+                            <option value="" disabled>Seleziona...</option>
+                            <option value="M">Maschile</option>
+                            <option value="F">Femminile</option>
+                        </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="dataNascita">Data di nascita</label>
+                        <div className="input-with-icon">
+                            <input
+                                type="text"
+                                id="dataNascita"
+                                name="dataNascita"
+                                value={formData.dataNascita}
+                                onChange={handleInputChange}
+                                placeholder="GG/MM/AAAA"
+                                className="cf-text-input"
+                            />
+                            <span className="material-symbols-outlined input-icon random-date" onClick={() => handleRandomField('dataNascita')}>
+                                auto_fix_high
+                            </span>
+                            <span className="material-symbols-outlined input-icon calendar-btn" onClick={() => setShowAgeCalculator(!showAgeCalculator)}>
+                                cake
+                            </span>
+                            {showAgeCalculator && (
+                                <div className="age-calculator-popover">
+                                    <div className="calculator-header">Calcola data di nascita</div>
+                                    <div className="calculator-body">
+                                        <div className="calc-row">
+                                            <label>Età (anni):</label>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max="150"
+                                                value={ageInput.years}
+                                                onChange={(e) => setAgeInput(prev => ({ ...prev, years: parseInt(e.target.value) || 0 }))}
+                                                onFocus={handleFocus}
+                                            />
+                                        </div>
+                                        <div className="calc-row">
+                                            <label>In data:</label>
+                                            <select
+                                                value={ageInput.relativeTo}
+                                                onChange={(e) => setAgeInput(prev => ({ ...prev, relativeTo: e.target.value }))}
+                                            >
+                                                <option value="ieri">Ieri</option>
+                                                <option value="oggi">Oggi</option>
+                                                <option value="domani">Domani</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="calculator-footer">
+                                        <button className="btn-small btn-cancel" onClick={() => setShowAgeCalculator(false)}>Annulla</button>
+                                        <button className="btn-small btn-confirm" onClick={handleApplyAge}>Conferma</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="dataNascita">Data di nascita</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.25rem' }}>
+                        <label htmlFor="searchLocation" style={{ marginBottom: 0 }}>
+                            {formData.estero ? 'Stato di nascita' : 'Comune di nascita'}
+                        </label>
+                        <div className="checkbox-group" style={{ padding: 0 }}>
+                            <input
+                                type="checkbox"
+                                id="estero"
+                                name="estero"
+                                checked={formData.estero}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="estero" style={{ fontSize: '0.85rem' }}>Estero</label>
+                        </div>
+                    </div>
                     <div className="input-with-icon">
                         <input
                             type="text"
-                            id="dataNascita"
-                            name="dataNascita"
-                            value={formData.dataNascita}
-                            onChange={handleInputChange}
-                            placeholder="GG/MM/AAAA"
-                        />
-                        <span className="material-symbols-outlined input-icon random-date" onClick={() => handleRandomField('dataNascita')}>
-                            auto_fix_high
-                        </span>
-                        <span className="material-symbols-outlined input-icon calendar-btn" onClick={() => setShowAgeCalculator(!showAgeCalculator)}>
-                            cake
-                        </span>
-                        {showAgeCalculator && (
-                            <div className="age-calculator-popover">
-                                <div className="calculator-header">Calcola data di nascita</div>
-                                <div className="calculator-body">
-                                    <div className="calc-row">
-                                        <label>Età (anni):</label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            max="150"
-                                            value={ageInput.years}
-                                            onChange={(e) => setAgeInput(prev => ({ ...prev, years: parseInt(e.target.value) || 0 }))}
-                                            onFocus={handleFocus}
-                                        />
-                                    </div>
-                                    <div className="calc-row">
-                                        <label>In data:</label>
-                                        <select
-                                            value={ageInput.relativeTo}
-                                            onChange={(e) => setAgeInput(prev => ({ ...prev, relativeTo: e.target.value }))}
-                                        >
-                                            <option value="ieri">Ieri</option>
-                                            <option value="oggi">Oggi</option>
-                                            <option value="domani">Domani</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="calculator-footer">
-                                    <button className="btn-small btn-cancel" onClick={() => setShowAgeCalculator(false)}>Annulla</button>
-                                    <button className="btn-small btn-confirm" onClick={handleApplyAge}>Conferma</button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+                            id="searchLocation"
+                            placeholder="Cerca comune o stato..."
+                            value={searchText !== null ? searchText : (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
+                            onChange={(e) => {
+                                const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+                                setSearchText(formattedValue);
+                                setShowLocationList(true);
+                                setActiveIndex(0);
+                            }}
+                            onKeyDown={(e) => {
+                                if (!showLocationList || filteredLocations.length === 0) return;
 
-            <div className="form-group checkbox-group">
-                <input
-                    type="checkbox"
-                    id="estero"
-                    name="estero"
-                    checked={formData.estero}
-                    onChange={handleInputChange}
-                />
-                <label htmlFor="estero">Estero</label>
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="searchLocation">
-                    {formData.estero ? 'Stato di nascita' : 'Comune di nascita'}
-                </label>
-                <div className="input-with-icon">
-                    <input
-                        type="text"
-                        id="searchLocation"
-                        placeholder="Cerca comune o stato..."
-                        value={searchText !== null ? searchText : (formData.codicePaese ? locations.find(l => l.value === formData.codicePaese)?.label : '')}
-                        onChange={(e) => {
-                            const formattedValue = e.target.value.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
-                            setSearchText(formattedValue);
-                            setShowLocationList(true);
-                            setActiveIndex(0);
-                        }}
-                        onKeyDown={(e) => {
-                            if (!showLocationList || filteredLocations.length === 0) return;
-
-                            if (e.key === 'ArrowDown') {
-                                e.preventDefault();
-                                setActiveIndex(prev => (prev < filteredLocations.length - 1 ? prev + 1 : prev));
-                            } else if (e.key === 'ArrowUp') {
-                                e.preventDefault();
-                                setActiveIndex(prev => (prev > 0 ? prev - 1 : prev));
-                            } else if (e.key === 'Enter' && activeIndex >= 0) {
-                                e.preventDefault();
-                                const selected = filteredLocations[activeIndex];
-                                if (selected) {
-                                    setFormData(prev => ({ ...prev, codicePaese: selected.value }));
-                                    setSearchText(null);
-                                    setShowLocationList(false);
-                                    setRisultato('');
-                                    setIsDirty(true);
-                                }
-                            } else if (e.key === 'Escape') {
-                                setShowLocationList(false);
-                                setSearchText(null);
-                            }
-                        }}
-                        onFocus={(e) => {
-                            const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
-                            setSearchText(currentLabel);
-                            setShowLocationList(true);
-                            setActiveIndex(0);
-                            handleFocus(e);
-                        }}
-                        onBlur={() => {
-                            setTimeout(() => {
-                                if (searchText === '') {
-                                    setFormData(prev => ({ ...prev, codicePaese: '' }));
-                                    setRisultato('');
-                                }
-                                setShowLocationList(false);
-                                setSearchText(null);
-                            }, 200);
-                        }}
-                        className="search-input"
-                    />
-                    <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('codicePaese')}>
-                        auto_fix_high
-                    </span>
-                </div>
-                {showLocationList && searchText && (
-                    <div className="location-list">
-                        {filteredLocations.length > 0 ? (
-                            filteredLocations.map((loc, index) => (
-                                <div
-                                    key={loc.value}
-                                    className={`location-item ${index === activeIndex ? 'active' : ''}`}
-                                    onClick={() => {
-                                        setFormData(prev => ({ ...prev, codicePaese: loc.value }));
+                                if (e.key === 'ArrowDown') {
+                                    e.preventDefault();
+                                    setActiveIndex(prev => (prev < filteredLocations.length - 1 ? prev + 1 : prev));
+                                } else if (e.key === 'ArrowUp') {
+                                    e.preventDefault();
+                                    setActiveIndex(prev => (prev > 0 ? prev - 1 : prev));
+                                } else if (e.key === 'Enter' && activeIndex >= 0) {
+                                    e.preventDefault();
+                                    const selected = filteredLocations[activeIndex];
+                                    if (selected) {
+                                        setFormData(prev => ({ ...prev, codicePaese: selected.value }));
                                         setSearchText(null);
                                         setShowLocationList(false);
                                         setRisultato('');
                                         setIsDirty(true);
-                                    }}
-                                >
-                                    {loc.label}
-                                </div>
-                            ))
-                        ) : (
-                            <div className="location-item no-results">Nessun risultato trovato</div>
-                        )}
+                                    }
+                                } else if (e.key === 'Escape') {
+                                    setShowLocationList(false);
+                                    setSearchText(null);
+                                }
+                            }}
+                            onFocus={(e) => {
+                                const currentLabel = locations.find(l => l.value === formData.codicePaese)?.label || '';
+                                setSearchText(currentLabel);
+                                setShowLocationList(true);
+                                setActiveIndex(0);
+                                handleFocus(e);
+                            }}
+                            onBlur={() => {
+                                setTimeout(() => {
+                                    if (searchText === '') {
+                                        setFormData(prev => ({ ...prev, codicePaese: '' }));
+                                        setRisultato('');
+                                    }
+                                    setShowLocationList(false);
+                                    setSearchText(null);
+                                }, 200);
+                            }}
+                            className="search-input"
+                        />
+                        <span className="material-symbols-outlined input-icon" onClick={() => handleRandomField('codicePaese')}>
+                            auto_fix_high
+                        </span>
                     </div>
-                )}
+                    {showLocationList && searchText && (
+                        <div className="location-list">
+                            {filteredLocations.length > 0 ? (
+                                filteredLocations.map((loc, index) => (
+                                    <div
+                                        key={loc.value}
+                                        className={`location-item ${index === activeIndex ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setFormData(prev => ({ ...prev, codicePaese: loc.value }));
+                                            setSearchText(null);
+                                            setShowLocationList(false);
+                                            setRisultato('');
+                                            setIsDirty(true);
+                                        }}
+                                    >
+                                        {loc.label}
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="location-item no-results">Nessun risultato trovato</div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
-            <div className="button-group">
-                <button className="btn btn-secondary" onClick={handleCalcola} disabled={!isFormValid() || !isDirty}>
+            <div className="button-group" style={{ marginTop: '1.5rem' }}>
+                <button className="cf-btn calculate" onClick={handleCalcola} disabled={!isFormValid() || !isDirty}>
+                    <span className="material-symbols-outlined">calculate</span>
                     CALCOLA CODICE FISCALE
-                </button>
-                <button className="btn btn-primary" onClick={handleCodiceCasuale}>
-                    CODICE CASUALE
                 </button>
             </div>
 
@@ -520,7 +540,7 @@ export default function Form({ onCalcolo, recentCalculations, initialData }) {
 
             {
                 risultato && (
-                    <div className="result-box">
+                    <div className="result-box valid">
                         <div className="result-code">
                             <span className="code-part">{risultato.substring(0, 3)}</span>
                             <span className="code-part">{risultato.substring(3, 6)}</span>

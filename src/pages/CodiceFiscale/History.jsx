@@ -47,10 +47,8 @@ export default function History({ calculations, onEdit }) {
     };
 
     const handleClearAll = () => {
-        if (window.confirm('Sei sicuro di voler cancellare tutto lo storico?')) {
-            setHistory([]);
-            localStorage.removeItem('codiciFiscaliHistory');
-        }
+        setHistory([]);
+        localStorage.removeItem('codiciFiscaliHistory');
     };
 
     const calculateAge = (dataNascita) => {
@@ -94,7 +92,8 @@ export default function History({ calculations, onEdit }) {
             <div className="history-header">
                 <h2>Storico</h2>
                 {history.length > 0 && (
-                    <button className="btn-clear" onClick={handleClearAll}>
+                    <button className="btn-clear" onClick={handleClearAll} title="Azzera lo storico">
+                        <span className="material-symbols-outlined">delete</span>
                         AZZERA LO STORICO
                     </button>
                 )}
